@@ -20,7 +20,6 @@ public class LoginView extends JFrame{
     
     public static void main(String[] args) {
         new LoginView("Tela de Login");
-        System.out.println("ola");
     }
     
 }
