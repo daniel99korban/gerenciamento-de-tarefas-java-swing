@@ -18,40 +18,25 @@ import java.awt.event.ActionListener;
  * @author josev_ferreira
  */
 
-public class NewLogin implements ActionListener {
-    JFrame frame;
-    JLabel label;
-    JButton botao;
-    JPanel panel;
+public class NewLogin extends JFrame {
+ 
+   public NewLogin (String Titulo){
     
-    
-
-    public static void main(String[] args){
-    
-        NewLogin login = new NewLogin();
-        login.inicio();
-    
-    }
-   public void inicio(){
-     frame = new JFrame("Tela login");  
-     botao = new JButton("Entar");
-     panel = new JPanel();
     // botao.addActionListener(this);
-     frame.add(botao);
-     frame.getContentPane().add(panel, BorderLayout.CENTER);
-     frame.getContentPane().add(botao, BorderLayout.SOUTH);
-     frame.setSize(1000, 600);
-     frame.setVisible(true);
-     frame.setLocationRelativeTo(null);
-      botao.setSize(100, 30);
+     this.setSize(1080, 640);
+     this.setVisible(true);
+     this.setLocationRelativeTo(null);
+     this.setLayout(null);
+     this.add(new Botao("Entrar")).setBounds(590, 400, 360, 40);// 480 fica no meio
+     this.add(new Label("E-mail")).setBounds(590, 200, 110, 40);
+     this.add(new Label ("Senha")).setBounds(590, 280, 110, 40);
+     this.add(new TextField ("")).setBounds(590, 230, 360, 40);
+     this.add(new TextField ("")).setBounds(590, 310, 360, 40);
      
-		
-   }
+      }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-  
+   
+ public static void main(String[] args){
+   new NewLogin("LOGIN");
+    } 
 }
