@@ -19,6 +19,7 @@ public class LoginView extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         JButton botao = new JButton("Entrar");
+        
         this.add(botao);
     }
     

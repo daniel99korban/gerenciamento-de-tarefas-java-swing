@@ -3,14 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package view;
-import java.awt.Color;
-import java.awt.Graphics;
 
-import javax.swing.JPanel;
+import javax.swing.JLabel;
+
 /**
  *
  * @author josev_ferreira
  */
-public class Panel extends JPanel {
-    public Panel(Stir)
+public class Label extends JLabel {
+    public Label(String titulo){
+        this.setText(titulo);
+        
+    
+    }
 }
