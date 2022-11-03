@@ -13,7 +13,5 @@ import javax.swing.JLabel;
 public class Label extends JLabel {
     public Label(String titulo){
         this.setText(titulo);
-        
-    
     }
 }

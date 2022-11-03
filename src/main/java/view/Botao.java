@@ -13,8 +13,6 @@ public class Botao extends JButton {
         this.setSize(80, 20);
         this.setForeground(Color.WHITE);
         this.setBackground(Color.BLUE);
-        this.setVisible(true);
-        
-        
+        this.setVisible(true);  
     }
 }

@@ -8,6 +8,6 @@ package gerenciador_tarefas;
 public class Gerenciador_tarefas {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        // codigo
     }
 }
