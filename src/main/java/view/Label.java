@@ -4,6 +4,7 @@
  */
 package view;
 
+import java.awt.Color;
 import javax.swing.JLabel;
 
 /**
@@ -11,7 +12,17 @@ import javax.swing.JLabel;
  * @author josev_ferreira
  */
 public class Label extends JLabel {
+    /**
+     * @param titulo será exatamente o texto que aparecerá na tela.
+     * @param cor o programador tem a opção de alterar cor, caso use o outro construtor, por default a cor será black.
+     */
+    public Label(String titulo, Color cor){
+        this.setText(titulo);
+        this.setForeground(cor);
+    }
+    
     public Label(String titulo){
         this.setText(titulo);
     }
+    
 }
