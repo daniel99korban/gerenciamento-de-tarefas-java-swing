@@ -12,6 +12,7 @@ import javax.swing.JTextField;
  */
 public class TextField extends JTextField{
     public TextField(String titulo){
+        this.setSize(360, 40);
         this.setText(titulo);
     }
 }
