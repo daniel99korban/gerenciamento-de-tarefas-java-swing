@@ -2,6 +2,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -16,30 +17,41 @@ import javax.swing.JPanel;
 
 public class LoginView extends JFrame {
     private Color rochoPersonalizado = new Color(51, 37, 58);
- 
+    Font fonteTitulo = new Font("Arial", Font.BOLD, 37);
+    Font fonte = new Font("Arial", Font.PLAIN, 16);
+    Font fontem = new Font("Arial", Font.PLAIN, 12);
     public LoginView (String titulo){
         JPanel background = new JPanel();
         background.setLayout(new GridLayout(1,2));
         this.setTitle(titulo);
-        this.setSize(990, 520);
+        this.setSize(1040, 520);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // painel para agrupar componentes de formulario de login
         JPanel formLogin = new JPanel();
         formLogin.setLayout(null);
-        // colocar label de bem vindo!
-        formLogin.add(new Label("E-mail", Color.WHITE)).setBounds(70, 120, 110, 40);
-        formLogin.add(new TextField ("")).setBounds(70, 160, 360, 40);
-        formLogin.add(new Label ("Senha", Color.WHITE)).setBounds(70, 220, 110, 40);
-        formLogin.add(new TextField ("")).setBounds(70, 260, 360, 40);
+        formLogin.add(new Label("Bem-vindo!", Color.WHITE, fonteTitulo)).setBounds(70, 40, 300, 50);
+        formLogin.add(new Label("Você ainda não tem conta?", Color.WHITE, fontem)).setBounds(70, 90, 300,30);
+        formLogin.add(new Label("Cadastre-se", Color.WHITE, fontem)).setBounds(225, 90, 100,30);
+       // label.setFont(new Font("Times new Roman", Font.BOLD, 20));
+        formLogin.add(new Label("E-mail", Color.WHITE, fonte)).setBounds(70, 120, 110, 40);
+        formLogin.add(new TextField ("", Color.GRAY)).setBounds(70, 160, 360, 40);
+        formLogin.add(new Label ("Senha", Color.WHITE, fonte)).setBounds(70, 220, 110, 40);
+        formLogin.add(new password ("", Color.GRAY)).setBounds(70, 260, 360, 40);
         formLogin.add(new Botao("Entrar")).setBounds(70, 350, 360, 40);
+        formLogin.add(new CheckBox("Continue logado", rochoPersonalizado)).setBounds(70, 300, 150, 40);
         formLogin.setBackground(this.rochoPersonalizado);
+        formLogin.add(new Label("esqueceu a senha?", Color.WHITE, fontem)).setBounds(225, 300, 160,40);
         // imagem
-        Icon imgCautioAction = new ImageIcon( "C:\\Users\\danie\\OneDrive\\Documentos\\NetBeansProjects\\gerenciamento-de-tarefas-java-swing\\src\\main\\java\\assets\\Task-management.png");
+        Icon imgCautioAction = new ImageIcon( "C:\\Users\\josev_ferreira\\OneDrive\\Documentos\\NetBeansProjects\\gerenciamento-de-tarefas-java-swing\\src\\main\\java\\assets\\Task-management.png");
 	JLabel labelImg = new JLabel("", imgCautioAction,JLabel.CENTER);
         // adicionar imagem e form de login
+       // Icon icon = new ImageIcon( "C:\\Users\\josev_ferreira\\OneDrive\\Documentos\\NetBeansProjects\\gerenciamento-de-tarefas-java-swing\\src\\main\\java\\assets\\footer-login.png");
+       // JLabel imagLabel = new JLabel("", icon, JLabel.CENTER);
         background.add(labelImg);
+        //background.add(imagLabel);
         background.add(formLogin);
+        
         background.setBackground(rochoPersonalizado);
         this.add(background);
         this.setVisible(true);
