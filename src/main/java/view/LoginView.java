@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import util.ArquivosProjeto;
 
 /**
  *
@@ -16,10 +17,12 @@ import javax.swing.JPanel;
  */
 
 public class LoginView extends JFrame {
+    
     private Color rochoPersonalizado = new Color(51, 37, 58);
     Font fonteTitulo = new Font("Arial", Font.BOLD, 37);
     Font fonte = new Font("Arial", Font.PLAIN, 16);
     Font fontem = new Font("Arial", Font.PLAIN, 12);
+    
     public LoginView (String titulo){
         JPanel background = new JPanel();
         background.setLayout(new GridLayout(1,2));
@@ -43,13 +46,10 @@ public class LoginView extends JFrame {
         formLogin.setBackground(this.rochoPersonalizado);
         formLogin.add(new Label("esqueceu a senha?", Color.WHITE, fontem)).setBounds(225, 300, 160,40);
         // imagem
-        Icon imgCautioAction = new ImageIcon( "C:\\Users\\josev_ferreira\\OneDrive\\Documentos\\NetBeansProjects\\gerenciamento-de-tarefas-java-swing\\src\\main\\java\\assets\\Task-management.png");
+        Icon imgCautioAction = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("Task-management.png"));
 	JLabel labelImg = new JLabel("", imgCautioAction,JLabel.CENTER);
         // adicionar imagem e form de login
-       // Icon icon = new ImageIcon( "C:\\Users\\josev_ferreira\\OneDrive\\Documentos\\NetBeansProjects\\gerenciamento-de-tarefas-java-swing\\src\\main\\java\\assets\\footer-login.png");
-       // JLabel imagLabel = new JLabel("", icon, JLabel.CENTER);
         background.add(labelImg);
-        //background.add(imagLabel);
         background.add(formLogin);
         
         background.setBackground(rochoPersonalizado);
