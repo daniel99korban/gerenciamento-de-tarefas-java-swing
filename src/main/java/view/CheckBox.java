@@ -4,20 +4,19 @@
  */
 package view;
 
-import java.awt.Color;
-import javax.swing.JTextField;
-
 /**
  *
  * @author josev_ferreira
  */
-public class TextField extends JTextField{
-    public TextField(String titulo, Color cor){
-        this.setSize(360, 40);
+import java.awt.Color;
+import javax.swing.JCheckBox;
+
+public class CheckBox extends JCheckBox {
+    public CheckBox(String titulo, Color cor){
         this.setText(titulo);
-        this.setForeground(cor);
+        this.setForeground(Color.WHITE);
+        this.setBackground(cor);
     }
 
     
-   
 }

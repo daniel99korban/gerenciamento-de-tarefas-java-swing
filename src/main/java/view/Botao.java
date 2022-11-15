@@ -8,11 +8,12 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 public class Botao extends JButton {
+    private Color azulEscuro = new Color(36, 9, 147);
     public Botao(String titulo){
         this.setText(titulo);
         this.setSize(80, 20);
         this.setForeground(Color.WHITE);
-        this.setBackground(Color.BLUE);
+        this.setBackground(azulEscuro);
         this.setVisible(true);  
     }
 }

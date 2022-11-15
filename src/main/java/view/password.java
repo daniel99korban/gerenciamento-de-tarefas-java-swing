@@ -4,20 +4,19 @@
  */
 package view;
 
-import java.awt.Color;
-import javax.swing.JTextField;
-
 /**
  *
  * @author josev_ferreira
  */
-public class TextField extends JTextField{
-    public TextField(String titulo, Color cor){
+
+import java.awt.Color;
+import javax.swing.JPasswordField;
+public class password extends JPasswordField {
+    public password (String Titulo, Color cor){
         this.setSize(360, 40);
-        this.setText(titulo);
+        this.setText(Titulo);
         this.setForeground(cor);
     }
-
-    
+     
    
 }
