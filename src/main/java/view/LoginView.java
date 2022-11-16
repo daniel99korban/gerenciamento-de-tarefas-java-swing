@@ -1,6 +1,11 @@
 
 package view;
 
+import view.componente.Botao;
+import view.componente.CheckBox;
+import view.componente.password;
+import view.componente.TextField;
+import view.componente.Label;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
