@@ -8,19 +8,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import util.ArquivosProjeto;
 
 /**
  *
  * @author daniel
  */
 public class Cartao extends JPanel{
+    
     public int id;
     public JLabel tituloCartao;
     public String nome;
     public int posicaoX;
     public int posicaoY;
     
-    public Cartao(String title, int[] corCartao){
+    public Cartao(String title, int ...corCartao){
         nome = title; 
         tituloCartao = new JLabel(title);
         tituloCartao.setForeground(Color.white);
@@ -28,8 +30,7 @@ public class Cartao extends JPanel{
         var caixaTitulocartao = new JPanel();
         var botaoAddTarefa = new JPanel();
         
-        String path = "C:\\Users\\danie\\OneDrive\\Documentos\\NetBeansProjects\\gerenciadores-de-layout\\src\\main\\java\\assets\\add-icon(174.84 - 464).png";
-        Icon icon = new ImageIcon(path);
+        Icon icon = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("add-icon(174.84 - 464).png"));
         var labelAddTarefa = new JLabel("Adicionar Tarefa", icon,JLabel.CENTER);
         
         caixaTitulocartao.add(tituloCartao);

@@ -1,11 +1,10 @@
+
 package view;
 
-
-import view.Cartao;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -13,57 +12,39 @@ import javax.swing.JFrame;
  */
 public class DashBoardView extends JFrame{
     
-    private List<Cartao> cartoes;
+    private List<GuiasDeProjetos> guiaProjeto;
     
-    public DashBoardView(){
-        super("Software de Gerenciamento de Projetos");
-    }
-    
-    public void init(){
-        // configurações gerais
+    public DashBoardView(String titulo){
+        super(titulo);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1140, 640);
         this.setLocationRelativeTo(null);
         this.setLayout(null);
-        this.cartoes = new ArrayList<>();
-    }
-    /**
-     * @param nomeCartao
-     * @param coresRGB cor de destaque para cada tipo de cartão
-     * posições onde ficaram cada cartão dentro do frame
-     * @param x
-     * @param y 
-     */
-    public void addCartao(int id, String nomeCartao, int[] coresRGB, int x, int y){
-        Cartao c = new Cartao(nomeCartao, coresRGB);
-        c.setSize(210, 500);
-        c.posicaoX = x;
-        c.posicaoY = y;
-        c.id = id;
-        cartoes.add(c);
+        // painel para agrupar abas de projetos
+        var background = new JPanel();
+        background.setLayout(null);
+        background.setSize(1140, 640);
+        background.setBackground(new Color(36, 37, 36));
+        // Arquvos para compor a guia de projetos(apenas um teste)
+        String[] nomesArquivos = {"Projeto de LPIII", "Estudos de JavaScript", "Prototipação de interfaces"};
+        GuiasDeProjetos gp = new GuiasDeProjetos();
+        for(int i=0; i<=2; i++){
+            gp.addProjeto(nomesArquivos[i]);
+        }
+        // Barra de tarefas
+        BarraDeFerramentas bf = new BarraDeFerramentas(this);
+        // guias de projetos
+        gp.setBounds(0, 36, 1140, 580);
+        gp.init();
+        background.add(gp);
+        // add componentes no painel
+        this.add(bf);
+        this.add(background);
+        this.setVisible(true);
     }
     
-    public void exibirCartoes(){
-        for(Cartao c: this.cartoes){
-            c.setLocation(c.posicaoX, c.posicaoY);
-            this.add(c);
-        }
-    }
-    // classe para teste
     public static void main(String[] args) {
-        DashBoardView dashBoard = new DashBoardView();
-        int[] corCartao1 = {87, 138, 242};
-        int[] corCartao2 = {58, 189, 218};
-        int[] corCartao3 = {34, 127, 35};
-        int[] corCartao4 = {182, 68, 246};
-        
-        dashBoard.init();
-        dashBoard.addCartao(1, "A fazer", corCartao1, 50, 50);
-        dashBoard.addCartao(2, "A fazer Hoje", corCartao2, 320, 50);
-        dashBoard.addCartao(3, "Em Progresso", corCartao3, 590, 50);
-        dashBoard.addCartao(4, "Feito", corCartao4, 860, 50);
-        dashBoard.exibirCartoes();
-        dashBoard.setVisible(true);
-        dashBoard.setBackground(Color.yellow);
+        new DashBoardView("Software de Gerenciamento de Projetos");
     }
+    
 }
