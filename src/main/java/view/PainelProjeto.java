@@ -33,10 +33,10 @@ public class PainelProjeto extends JPanel{
      * @param nomeCartao
      * @param coresRGB cor de destaque para cada tipo de cartão
      * posições onde ficaram cada cartão dentro do frame
-     * @param x
+     * @param x  
      * @param y 
      */
-    private void addCartao(int id, String nomeCartao, int[] coresRGB, int x, int y){
+    private void criarCartao(int id, String nomeCartao, int[] coresRGB, int x, int y){
         Cartao c = new Cartao(nomeCartao, coresRGB);
         c.setSize(210, 500);
         c.posicaoX = x;
@@ -58,10 +58,10 @@ public class PainelProjeto extends JPanel{
         int[] corCartao3 = {34, 127, 35};// verde
         int[] corCartao4 = {182, 68, 246};// margenta
    
-        this.addCartao(1, "A fazer", corCartao1, 50, 50);
-        this.addCartao(2, "A fazer Hoje", corCartao2, 320, 50);
-        this.addCartao(3, "Em Progresso", corCartao3, 590, 50);
-        this.addCartao(4, "Feito", corCartao4, 860, 50);
+        this.criarCartao(1, "A fazer", corCartao1, 50, 50);
+        this.criarCartao(2, "A fazer Hoje", corCartao2, 320, 50);
+        this.criarCartao(3, "Em Progresso", corCartao3, 590, 50);
+        this.criarCartao(4, "Feito", corCartao4, 860, 50);
         this.exibirCartoes();
         this.setBackground(new Color(30, 30, 30));
         this.setVisible(true);  
