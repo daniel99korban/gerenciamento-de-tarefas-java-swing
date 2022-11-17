@@ -26,13 +26,13 @@ public class DashBoardView extends JFrame{
         background.setSize(1140, 640);
         background.setBackground(new Color(36, 37, 36));
         // Arquvos para compor a guia de projetos(apenas um teste)
-        String[] nomesArquivos = {"Projeto de LPIII", "Estudos de JavaScript", "Prototipação de interfaces"};
+        String[] nomesArquivos = {"Projeto de LPIII", "Estudos de Java", "Prototipação de interfaces"};
         GuiasDeProjetos gp = new GuiasDeProjetos();
         for(int i=0; i<=2; i++){
             gp.addProjeto(nomesArquivos[i]);
         }
         // Barra de tarefas
-        BarraDeFerramentas bf = new BarraDeFerramentas(this);
+        BarraDeMenu bf = new BarraDeMenu(this);
         // guias de projetos
         gp.setBounds(0, 36, 1140, 580);
         gp.init();
