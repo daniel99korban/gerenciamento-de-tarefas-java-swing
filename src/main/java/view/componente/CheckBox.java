@@ -12,11 +12,21 @@ import java.awt.Color;
 import javax.swing.JCheckBox;
 
 public class CheckBox extends JCheckBox {
+    
     public CheckBox(String titulo, Color cor){
         this.setText(titulo);
         this.setForeground(Color.WHITE);
         this.setBackground(cor);
     }
-
+    
+    public CheckBox(String titulo, Color corFrente, Color corFundo){
+        this.setText(titulo);
+        this.setForeground(corFrente);
+        this.setBackground(corFundo);
+    }
+    
+    public CheckBox(String titulo){
+        this.setText(titulo);
+    }
     
 }
