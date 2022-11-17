@@ -23,7 +23,7 @@ import util.ArquivosProjeto;
 
 public class LoginView extends JFrame {
     
-    private Color rochoPersonalizado = new Color(51, 37, 58);
+    private Color margentaPersonalizado = new Color(51, 37, 58);
     Font fonteTitulo = new Font("Arial", Font.BOLD, 37);
     Font fonte = new Font("Arial", Font.PLAIN, 16);
     Font fontem = new Font("Arial", Font.PLAIN, 12);
@@ -47,8 +47,8 @@ public class LoginView extends JFrame {
         formLogin.add(new Label ("Senha", Color.WHITE, fonte)).setBounds(70, 220, 110, 40);
         formLogin.add(new password ("", Color.GRAY)).setBounds(70, 260, 360, 40);
         formLogin.add(new Botao("Entrar")).setBounds(70, 350, 360, 40);
-        formLogin.add(new CheckBox("Continue logado", rochoPersonalizado)).setBounds(70, 300, 150, 40);
-        formLogin.setBackground(this.rochoPersonalizado);
+        formLogin.add(new CheckBox("Continue logado", margentaPersonalizado)).setBounds(70, 300, 150, 40);
+        formLogin.setBackground(this.margentaPersonalizado);
         formLogin.add(new Label("esqueceu a senha?", Color.WHITE, fontem)).setBounds(225, 300, 160,40);
         // imagem
         Icon imgCautioAction = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("Task-management.png"));
@@ -57,7 +57,7 @@ public class LoginView extends JFrame {
         background.add(labelImg);
         background.add(formLogin);
         
-        background.setBackground(rochoPersonalizado);
+        background.setBackground(margentaPersonalizado);
         this.add(background);
         this.setVisible(true);
     }
