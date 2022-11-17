@@ -8,6 +8,9 @@ import java.awt.GridLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import util.ArquivosProjeto;
@@ -16,24 +19,16 @@ import util.ArquivosProjeto;
  *
  * @author danie
  */
-public class BarraDeFerramentas extends JToolBar{
+public class BarraDeMenu extends JToolBar{
 
-    public BarraDeFerramentas(Component c){
+    public BarraDeMenu(Component c){
         this.setSize(c.getWidth(), 40);
         this.setLayout(new GridLayout(1, 3, 80, 0));
         // Determinar se a barra de ferramentas pode se mover pelo container:
         this.setFloatable(false);
         this.setBackground(new Color(51, 51, 51));
         // configurações de menu
-        var painelMenu = new JPanel();
-        painelMenu.setLayout(new GridLayout(1, 4, 10, 0));
-        Icon checkIcon = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("check-icon.png"));
-        var labelCheckIcon = new JLabel("", checkIcon,JLabel.CENTER);
-        painelMenu.add(labelCheckIcon);
-        painelMenu.add(new Label("Arquivos", Color.WHITE));
-        painelMenu.add(new Label("Editar", Color.WHITE));
-        painelMenu.add(new Label("Ajuda", Color.WHITE));
-        painelMenu.setBackground(new Color(51, 51, 51));
+        this.construirMenu();
         // label de alterar nome do projeto
         Icon pencilIcon = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("pencil-icon.png"));
         var labelPencilIcon = new JLabel("undefined", pencilIcon,JLabel.CENTER); 
@@ -52,10 +47,42 @@ public class BarraDeFerramentas extends JToolBar{
         painelLoginUsu.add(nomeUsuario);
         painelLoginUsu.add(labelCirculo);
         // adicionar elementos
-        this.add(painelMenu);
         this.add(labelPencilIcon);
         this.add(painelLoginUsu);
         this.setVisible(true);
+    }
+    
+    private void construirMenu(){
+        var painelMenu = new JPanel();
+        painelMenu.setLayout(new GridLayout());
+        var checkIcon = new JLabel();
+        checkIcon.setIcon(new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("check-icon.png")));
+        painelMenu.add(checkIcon);
+        painelMenu.setBackground(new Color(51, 51, 51));
+        
+        JMenuBar bar = new JMenuBar();
+	JMenu m1 = new JMenu("Arquivos");
+	JMenu m2 = new JMenu("Editar");
+	JMenu m3 = new JMenu("Ajuda");
+        m1.setForeground(Color.WHITE);
+        m2.setForeground(Color.WHITE);
+        m3.setForeground(Color.WHITE);
+        
+        JMenuItem item1M1 = new JMenuItem("Projetos recentes");
+        JMenuItem item2M1 = new JMenuItem("Criar Novo Projeto");
+        JMenuItem item1M2 = new JMenuItem("Config editor");
+        JMenuItem item1M3 = new JMenuItem("Principais Comandos");
+	
+	bar.add(m1);
+	bar.add(m2);
+	bar.add(m3);
+	m1.add(item1M1);
+	m1.add(item2M1);
+	m2.add(item1M2);
+	m3.add(item1M3);
+	bar.setBackground(new Color(51, 51, 51));
+	painelMenu.add(bar);	
+        this.add(painelMenu);
     }
     
 }
