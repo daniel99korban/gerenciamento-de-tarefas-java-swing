@@ -29,11 +29,6 @@ public class Cartao extends JPanel{
     public String nome;
     public int posicaoX;
     public int posicaoY;
-    // cores
-    private Color cores[] = {Color.black, Color.blue, Color.cyan, Color.darkGray,
-	Color.gray, Color.green, Color.lightGray,
-	Color.magenta, Color.orange, Color.pink, Color.red,
-	Color.white, Color.yellow };
     
     public Cartao(String title, int ...corCartao){
         nome = title; 
@@ -86,6 +81,8 @@ public class Cartao extends JPanel{
         // fonte
         Font fonte = new Font("Arial", Font.PLAIN, 26);
         list.setFont(fonte);
+        list.setForeground(new Color(134,131,131));
+        list.setBackground(new Color(51,51,51));
         this.add(new JScrollPane(list));
 //	painel.setVisible(true);
         this.setBackground(Color.red);
