@@ -147,11 +147,6 @@ public class TarefaView extends JFrame{
         
         // criar elementos
         String[] nomeIcon = {"check-list-simbol.png", "date-simbol.png","anexo-simbol.png"};
-
-        // adicionais da tarefa
-        var painel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        painel.setSize(800, 120);
-        painel.setBackground(new Color(217, 217, 217));
         
         // botões
         Color corFundo = new Color(217, 217, 217);
