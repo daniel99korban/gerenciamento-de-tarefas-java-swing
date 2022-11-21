@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 import model.Tarefa;
 import util.ArquivosProjeto;
 import view.componente.Botao;
+import view.tratadoreventos.TratadorDeEvento;
 
 /**
  *
@@ -54,6 +55,7 @@ public class Cartao extends JPanel{
         // simular tarefas no cartão(apenas teste) os dados serão recuparados de um BD
         for(int i=1; i<=30; i++){
             var t = new Tarefa("Tarefa " + i);
+            t.setSubTitulo("na lista " + tituloCartao.getText());
             this.addTarefa(t);
         }
         // exibir tarefas no cartão
@@ -65,11 +67,13 @@ public class Cartao extends JPanel{
         this.listaTarefas.add(tarefa);
     }
     
-    public JPanel construirItemTarefaView(String titulo){
+    public JPanel construirItemTarefaView(Tarefa tarefa){// painel
         var p = new JPanel();
         p.setLayout(new BorderLayout());
-        p.add(new JLabel(titulo), BorderLayout.CENTER);
-        p.add(new JButton("Abrir Tarefa"), BorderLayout.EAST);
+        p.add(new JLabel(tarefa.getTitulo()), BorderLayout.CENTER);
+        var b = new Botao("Abrir Tarefa", Color.WHITE, new Color(163, 151,151)); 
+        b.addActionListener(new TratadorDeEvento(tarefa));
+        p.add(b, BorderLayout.EAST);
         p.setSize(200, 200);
         p.setBorder(new LineBorder(Color.WHITE, 2));
         p.setVisible(true);
@@ -83,7 +87,7 @@ public class Cartao extends JPanel{
         // loop para simular inserção de elementos
         for(int i=0; i < listaTarefas.size(); i++){
             String nomeTarefa = listaTarefas.get(i).getTitulo();
-            painelListaTarefa.add( this.construirItemTarefaView(nomeTarefa));
+            painelListaTarefa.add( this.construirItemTarefaView(listaTarefas.get(i)));
         }
         painelListaTarefa.setForeground(new Color(134,131,131));
         painelListaTarefa.setBackground(new Color(51,51,51));

@@ -25,7 +25,7 @@ public class DashBoardView extends JFrame{
         background.setLayout(null);
         background.setSize(1140, 640);
         background.setBackground(new Color(36, 37, 36));
-        // Arquvos para compor a guia de projetos(apenas um teste)
+        // Arquvos para compor a guia de projetos(apenas um teste) os dados serão recuperados de um BD
         String[] nomesArquivos = {"Projeto de LPIII", "Estudos de Java", "Prototipação de interfaces"};
         GuiasDeProjetos gp = new GuiasDeProjetos();
         for(int i=0; i<=2; i++){

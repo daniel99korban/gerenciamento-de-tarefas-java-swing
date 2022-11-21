@@ -3,7 +3,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -37,15 +36,12 @@ public class TarefaView extends JFrame{
     private Botao addAnexo;
     private Botao moverCartao;
     private Botao botaoEditar;
-    // uma referências para o model tarefa e cartão onde se encontra a tarefa
-    private Tarefa tarefaModel;
-    private Cartao cartao;
+    // uma referência para tarefa a ser construida
+    private Tarefa tarefa;
 
-    public TarefaView(Tarefa tarefaModel, Cartao cartao){
+    public TarefaView(Tarefa tarefa){
         super("Visulizar Tarefa");
-        this.tarefaModel = tarefaModel;
-        this.cartao = cartao;
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.tarefa = tarefa;
         this.setSize(790, 450);
         this.setLocationRelativeTo(null);
     }
@@ -75,7 +71,6 @@ public class TarefaView extends JFrame{
     
     private JPanel construirPainelEsquerdo(){
         var containerEsquerdo = new JPanel();
-//        containerEsquerdo.setSize(635, 440);
         containerEsquerdo.setLayout(new GridBagLayout());
         containerEsquerdo.setBackground(Color.WHITE);
         
@@ -86,8 +81,10 @@ public class TarefaView extends JFrame{
         
         Font fonteTitulo = new Font("Arial", Font.BOLD, 16);
         Font fonte = new Font("Arial", Font.PLAIN, 16);
-        pTituloSubTitulo.add(new Label("Nome da Tarefa", Color.BLACK, fonteTitulo));
-        pTituloSubTitulo.add(new Label("cartão onde se encontra a tarefa", Color.BLACK, fonte));
+//        pTituloSubTitulo.add(new Label("Nome da Tarefa", Color.BLACK, fonteTitulo));
+//        pTituloSubTitulo.add(new Label("cartão onde se encontra a tarefa", Color.BLACK, fonte));
+        pTituloSubTitulo.add(new Label(tarefa.getTitulo(), Color.BLACK, fonteTitulo));
+        pTituloSubTitulo.add(new Label(tarefa.getSubTitulo(), Color.BLACK, fonte));
         c.gridx = 0;
         c.gridy = 0;
         containerEsquerdo.add(pTituloSubTitulo, c);
@@ -185,7 +182,7 @@ public class TarefaView extends JFrame{
     }
     
     public static void main(String[] args) {
-        var f = new TarefaView(null, null);
+        var f = new TarefaView(null);
         f.iniciarComponentes();
         f.construirPainelTarefa();
         f.setVisible(true);
