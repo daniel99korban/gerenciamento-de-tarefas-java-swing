@@ -6,9 +6,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -27,8 +29,7 @@ public class Cartao extends JPanel{
     
     public int id;
     public JLabel tituloCartao;
-    public List<String> listaTarefas;// antiga
-//    public List<Tarefa> listaTarefas;// nova
+    public List<Tarefa> listaTarefas;
     public Botao botaoAddTarefa;
     public int posicaoX;
     public int posicaoY;
@@ -50,38 +51,43 @@ public class Cartao extends JPanel{
         this.add(BorderLayout.SOUTH, botaoAddTarefa);
         this.setBorder(new LineBorder(Color.WHITE, 1));
         this.setBackground(new Color(51, 51, 51));
-        // simular tarefas no cartão(apenas teste)
+        // simular tarefas no cartão(apenas teste) os dados serão recuparados de um BD
         for(int i=1; i<=30; i++){
-            this.addTarefa("Tarefa " + i);
+            var t = new Tarefa("Tarefa " + i);
+            this.addTarefa(t);
         }
         // exibir tarefas no cartão
         this.exibirTarefas();
         
     }
     
-    public void addTarefa(String tarefa){
+    public void addTarefa(Tarefa tarefa){
         this.listaTarefas.add(tarefa);
     }
     
+    public JPanel construirItemTarefaView(String titulo){
+        var p = new JPanel();
+        p.setLayout(new BorderLayout());
+        p.add(new JLabel(titulo), BorderLayout.CENTER);
+        p.add(new JButton("Abrir Tarefa"), BorderLayout.EAST);
+        p.setSize(200, 200);
+        p.setBorder(new LineBorder(Color.WHITE, 2));
+        p.setVisible(true);
+        return p;
+    }
+    
     public void exibirTarefas(){
-        DefaultListModel model = new DefaultListModel();
-        // iserir tarefas no cartão
+        var painelListaTarefa = new JPanel();
+        var scroll = new JScrollPane(painelListaTarefa);
+        painelListaTarefa.setLayout(new BoxLayout(painelListaTarefa, BoxLayout.Y_AXIS));
+        // loop para simular inserção de elementos
         for(int i=0; i < listaTarefas.size(); i++){
-            
-            model.addElement(listaTarefas.get(i));
+            String nomeTarefa = listaTarefas.get(i).getTitulo();
+            painelListaTarefa.add( this.construirItemTarefaView(nomeTarefa));
         }
-        JList list = new JList(model);
-//        list.setModel(model);
-        JPanel painel = new JPanel();
-        list.setVisibleRowCount(20);
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        // fonte
-        Font fonte = new Font("Arial", Font.PLAIN, 26);
-        list.setFont(fonte);
-        list.setForeground(new Color(134,131,131));
-        list.setBackground(new Color(51,51,51));
-        this.add(new JScrollPane(list));
-        this.setBackground(Color.red);
+        painelListaTarefa.setForeground(new Color(134,131,131));
+        painelListaTarefa.setBackground(new Color(51,51,51));
+        this.add(scroll);
     }
     
 }
