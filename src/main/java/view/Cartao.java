@@ -15,7 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
+import model.Tarefa;
 import util.ArquivosProjeto;
+import view.componente.Botao;
 
 /**
  *
@@ -25,28 +27,23 @@ public class Cartao extends JPanel{
     
     public int id;
     public JLabel tituloCartao;
-    public List<String> listaTarefas;
-    public String nome;
+    public List<String> listaTarefas;// antiga
+//    public List<Tarefa> listaTarefas;// nova
+    public Botao botaoAddTarefa;
     public int posicaoX;
     public int posicaoY;
     
-    public Cartao(String title, int ...corCartao){
-        nome = title; 
+    public Cartao(String title, int ...corCartao){ 
         tituloCartao = new JLabel(title);
-        tituloCartao.setForeground(Color.white);
         listaTarefas = new ArrayList<>();
+        tituloCartao.setForeground(Color.white);
         
         var caixaTitulocartao = new JPanel();
-        var botaoAddTarefa = new JPanel();
-        
-        Icon icon = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("add-icon(174.84 - 464).png"));
-        var labelAddTarefa = new JLabel("Adicionar Tarefa", icon,JLabel.CENTER);
-        
+        // botão adicionar tarefa
         caixaTitulocartao.add(tituloCartao);
         caixaTitulocartao.setBackground(new Color(corCartao[0], corCartao[1], corCartao[2]));    
-        labelAddTarefa.setForeground(Color.WHITE);
-        botaoAddTarefa.add(labelAddTarefa);
-        botaoAddTarefa.setBackground(new Color(51, 51, 51));
+        botaoAddTarefa = new Botao("Adicionar Tarefa", Color.WHITE, new Color(51, 51, 51));
+        botaoAddTarefa.setIcon(new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("add-icon(174.84 - 464).png")));
         
         this.setLayout(new BorderLayout());
         this.add(BorderLayout.NORTH, caixaTitulocartao);
@@ -84,10 +81,7 @@ public class Cartao extends JPanel{
         list.setForeground(new Color(134,131,131));
         list.setBackground(new Color(51,51,51));
         this.add(new JScrollPane(list));
-//	painel.setVisible(true);
         this.setBackground(Color.red);
-//        painel.setSize(this.getWidth(), this.getHeight());
-//        this.add(painel, BorderLayout.CENTER);
     }
     
 }

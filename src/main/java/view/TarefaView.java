@@ -10,7 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +18,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import model.Tarefa;
 import util.ArquivosProjeto;
 import view.componente.Botao;
 import view.componente.CheckBox;
@@ -31,9 +31,20 @@ import view.componente.Label;
 public class TarefaView extends JFrame{
 
     private GridBagConstraints c;
+    // opcionais da tarefa
+    private Botao addCheckList;
+    private Botao addDatas;
+    private Botao addAnexo;
+    private Botao moverCartao;
+    private Botao botaoEditar;
+    // uma referências para o model tarefa e cartão onde se encontra a tarefa
+    private Tarefa tarefaModel;
+    private Cartao cartao;
 
-    public TarefaView(){
+    public TarefaView(Tarefa tarefaModel, Cartao cartao){
         super("Visulizar Tarefa");
+        this.tarefaModel = tarefaModel;
+        this.cartao = cartao;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(790, 450);
         this.setLocationRelativeTo(null);
@@ -49,14 +60,12 @@ public class TarefaView extends JFrame{
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipadx = 5;
         c.ipady = 10;
-//        this.setLayout(new GridBagLayout());
     }
     
     public void construirPainelTarefa(){
-       // this.setLayout(new GridLayout(1, 2, 20,20));
        var painelEsquerdo = this.construirPainelEsquerdo();
-       painelEsquerdo.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10),  new EtchedBorder()));
        var painelDireito = this.construirPainelDireito();
+       painelEsquerdo.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(10, 10, 10, 10),  new EtchedBorder()));
        
        JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, painelEsquerdo,painelDireito);
        sp.setOneTouchExpandable(true);
@@ -73,6 +82,7 @@ public class TarefaView extends JFrame{
         var pTituloSubTitulo = new JPanel();
         pTituloSubTitulo.setSize(420, 120);
         pTituloSubTitulo.setLayout(new GridLayout(2, 1));
+        pTituloSubTitulo.setBackground(Color.WHITE);
         
         Font fonteTitulo = new Font("Arial", Font.BOLD, 16);
         Font fonte = new Font("Arial", Font.PLAIN, 16);
@@ -90,7 +100,10 @@ public class TarefaView extends JFrame{
         var lbDesc = new JLabel("Descricao");
         lbDesc.setIcon(new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("descricao-icon.png")));
         descricaoTarefa.add(lbDesc);
-        descricaoTarefa.add(new Botao("Editar", Color.BLACK, new Color(163, 151,151)));
+        
+        botaoEditar = new Botao("Editar", Color.BLACK, new Color(163, 151,151));
+        descricaoTarefa.add(botaoEditar);
+        
         c.gridy = 1;
         containerEsquerdo.add(descricaoTarefa, c);
         // area de texto para a descrição
@@ -117,60 +130,69 @@ public class TarefaView extends JFrame{
         }
         c.gridy = 3;
         containerEsquerdo.add(checkList, c);
-        // redefinir algumas propriedades do grid
-        c.ipadx = 5;
-        c.ipady = 10;
-        c.gridx = 0;
-        c.gridy = 0;
+        redefinirGrid();
         return containerEsquerdo;
     }
     
     private JPanel construirPainelDireito(){
-        var containerEsquerdo = new JPanel();
+        JPanel containerEsquerdo = new JPanel();
         containerEsquerdo.setLayout(new GridBagLayout());
         containerEsquerdo.setBackground(Color.WHITE);
+        
         // para agrupar opções de adicionar ao cartão
         var pAddaoCartao = new JPanel();
         pAddaoCartao.setLayout(new GridLayout(3, 1, 0, 20));
         pAddaoCartao.setBackground(Color.WHITE);
-//        pAddaoCartao.setSize(1200, 140);
-        // criar elementos
-        String[][] elementos = {
-            {"CheckList", "check-list-simbol.png"},
-            {"Datas", "date-simbol.png"}, 
-            {"Anexo", "anexo-simbol.png"}
-        };
         pAddaoCartao.setBorder(BorderFactory.createTitledBorder("Adicionar ao cartão"));  
-        for(int i=0; i<3; i++){
-            // painel para cada botão
-            var painel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            painel.setSize(800, 120);
-            painel.setBackground(new Color(217, 217, 217));
-            var lb = new JLabel(elementos[i][0]);
-            lb.setIcon(new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(elementos[i][1])));
-            painel.add(lb);
-            pAddaoCartao.add(painel);
-        }
+        
+        // criar elementos
+        String[] nomeIcon = {"check-list-simbol.png", "date-simbol.png","anexo-simbol.png"};
+
+        // adicionais da tarefa
+        var painel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        painel.setSize(800, 120);
+        painel.setBackground(new Color(217, 217, 217));
+        
+        // botões
+        Color corFundo = new Color(217, 217, 217);
+        addAnexo = new Botao("Anexo", Color.BLACK , corFundo);
+        addDatas = new Botao("Datas", Color.BLACK, corFundo);
+        addCheckList = new Botao("CheckList", Color.BLACK, corFundo);
+        ImageIcon iconAnexo = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(nomeIcon[0]));
+        ImageIcon iconDatas = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(nomeIcon[1]));
+        ImageIcon iconCheckList = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(nomeIcon[2]));
+        addAnexo.setIcon(iconAnexo);
+        addDatas.setIcon(iconDatas);
+        addCheckList.setIcon(iconCheckList);
+        
+        // addionando os botões ao painel
+        pAddaoCartao.add(addAnexo);
+        pAddaoCartao.add(addDatas);
+        pAddaoCartao.add(addCheckList);
+     
         c.gridy = 0;
         containerEsquerdo.add(pAddaoCartao, c);
         c.gridy = 1;
-        var btn = new Botao("Mover Cartão", Color.WHITE);
-        btn.setSize(40, 20);
-        containerEsquerdo.add(btn, c);
+        moverCartao = new Botao("Mover Cartão", Color.WHITE);
+        moverCartao.setSize(40, 20);
+        containerEsquerdo.add(moverCartao, c);
+        redefinirGrid();
+        return containerEsquerdo;
+        
+    }
+    
+    private void redefinirGrid(){
         // redefinir algumas propriedades do grid
         c.ipadx = 5;
         c.ipady = 10;
         c.gridx = 0;
         c.gridy = 0;
-        return containerEsquerdo;
-        
     }
     
     public static void main(String[] args) {
-        var f = new TarefaView();
+        var f = new TarefaView(null, null);
         f.iniciarComponentes();
         f.construirPainelTarefa();
-//        f.pack();
         f.setVisible(true);
     }
     
