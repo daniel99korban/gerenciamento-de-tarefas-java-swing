@@ -25,13 +25,21 @@ public class Cartao {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public void addTarefa(Tarefa tarefa){
+        this.getListaTarefas().add(tarefa);
+    }
+    
+    public Tarefa getTarefa(int index){
+        return this.getListaTarefas().get(index);
+    }
 
     public List<Tarefa> getListaTarefas() {
         return listaTarefas;
     }
 
-    public void setListaTarefas(List<Tarefa> listaTarefas) {
-        this.listaTarefas = listaTarefas;
-    }
+//    public void setListaTarefas(List<Tarefa> listaTarefas) {
+//        this.listaTarefas = listaTarefas;
+//    }
     
 }

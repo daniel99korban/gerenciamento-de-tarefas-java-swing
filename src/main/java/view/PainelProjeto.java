@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import model.Cartao;
 
 /**
  *
@@ -36,12 +37,11 @@ public class PainelProjeto extends JPanel{
      * @param x  
      * @param y 
      */
-    private void criarCartao(int id, String nomeCartao, int[] coresRGB, int x, int y){
-        CartaoView c = new CartaoView(nomeCartao, coresRGB);
+    private void criarCartao(Cartao cartaoModel, String nomeCartao, int[] coresRGB, int x, int y){
+        CartaoView c = new CartaoView(nomeCartao, cartaoModel, coresRGB);
         c.setSize(210, 500);
         c.posicaoX = x;
         c.posicaoY = y;
-        c.id = id;
         cartoes.add(c);
     }
     
@@ -53,15 +53,21 @@ public class PainelProjeto extends JPanel{
     }
     
     public void init() {
+        // simular estruturas
         int[] corCartao1 = {87, 138, 242};// azul
         int[] corCartao2 = {58, 189, 218};// azul-claro
         int[] corCartao3 = {34, 127, 35};// verde
         int[] corCartao4 = {182, 68, 246};// margenta
-   
-        this.criarCartao(1, "A fazer", corCartao1, 50, 50);
-        this.criarCartao(2, "A fazer Hoje", corCartao2, 320, 50);
-        this.criarCartao(3, "Em Progresso", corCartao3, 590, 50);
-        this.criarCartao(4, "Feito", corCartao4, 860, 50);
+        // model
+        Cartao c1 = new Cartao(1);
+        Cartao c2 = new Cartao(2);
+        Cartao c3 = new Cartao(3);
+        Cartao c4 = new Cartao(4);
+        // view
+        this.criarCartao(c1, "A fazer", corCartao1, 50, 50);
+        this.criarCartao(c2, "A fazer Hoje", corCartao2, 320, 50);
+        this.criarCartao(c3, "Em Progresso", corCartao3, 590, 50);
+        this.criarCartao(c4, "Feito", corCartao4, 860, 50);
         this.exibirCartoes();
         this.setBackground(new Color(30, 30, 30));
         this.setVisible(true);  

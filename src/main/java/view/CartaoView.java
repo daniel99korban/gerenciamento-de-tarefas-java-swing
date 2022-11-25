@@ -4,14 +4,13 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
+import model.Cartao;
 import model.Tarefa;
 import util.ArquivosProjeto;
 import view.componente.Botao;
@@ -22,16 +21,16 @@ import view.componente.Botao;
  */
 public class CartaoView extends JPanel{
     
-    public int id;
     public JLabel tituloCartao;
-    public List<Tarefa> listaTarefas;
+    // uma referência para o cartão a ser construido
+    public Cartao cartaoModel;
     public Botao botaoAddTarefa;
     public int posicaoX;
     public int posicaoY;
     
-    public CartaoView(String title, int ...corCartao){ 
+    public CartaoView(String title, Cartao cartaoModel, int ...corCartao){ 
         tituloCartao = new JLabel(title);
-        listaTarefas = new ArrayList<>();
+        this.cartaoModel = cartaoModel;
         tituloCartao.setForeground(Color.white);
         
         var caixaTitulocartao = new JPanel();
@@ -58,7 +57,7 @@ public class CartaoView extends JPanel{
     }
     
     public void addTarefa(Tarefa tarefa){
-        this.listaTarefas.add(tarefa);
+        this.cartaoModel.addTarefa(tarefa);
     }
     
     public JPanel construirItemTarefaView(Tarefa tarefa){// painel
@@ -88,9 +87,10 @@ public class CartaoView extends JPanel{
         var scroll = new JScrollPane(painelListaTarefa);
         painelListaTarefa.setLayout(new BoxLayout(painelListaTarefa, BoxLayout.Y_AXIS));
         // loop para simular inserção de elementos
-        for(int i=0; i < listaTarefas.size(); i++){
-            String nomeTarefa = listaTarefas.get(i).getTitulo();
-            painelListaTarefa.add( this.construirItemTarefaView(listaTarefas.get(i)));
+        for(int i=0; i < this.cartaoModel.getListaTarefas().size(); i++){
+            String nomeTarefa = this.cartaoModel.getTarefa(i).getTitulo();
+            painelListaTarefa.add(
+                    this.construirItemTarefaView(this.cartaoModel.getTarefa(i)));
         }
         painelListaTarefa.setForeground(new Color(134,131,131));
         painelListaTarefa.setBackground(new Color(51,51,51));

@@ -39,11 +39,11 @@ public class TarefaView extends JFrame{
     private Botao moverCartao;
     private Botao botaoEditar;
     // uma referência para tarefa a ser construida
-    private Tarefa tarefa;
+    private Tarefa tarefaModel;
 
-    public TarefaView(Tarefa tarefa){
+    public TarefaView(Tarefa tarefaModel){
         super("Visulizar Tarefa");
-        this.tarefa = tarefa;
+        this.tarefaModel = tarefaModel;
         this.setSize(790, 450);
         this.setLocationRelativeTo(null);
         //Adiciona um escutador de eventos para o evento de fechar o frame
@@ -93,8 +93,8 @@ public class TarefaView extends JFrame{
         Font fonte = new Font("Arial", Font.PLAIN, 16);
 //        pTituloSubTitulo.add(new Label("Nome da Tarefa", Color.BLACK, fonteTitulo));
 //        pTituloSubTitulo.add(new Label("cartão onde se encontra a tarefa", Color.BLACK, fonte));
-        pTituloSubTitulo.add(new Label(tarefa.getTitulo(), Color.BLACK, fonteTitulo));
-        pTituloSubTitulo.add(new Label(tarefa.getSubTitulo(), Color.BLACK, fonte));
+        pTituloSubTitulo.add(new Label(tarefaModel.getTitulo(), Color.BLACK, fonteTitulo));
+        pTituloSubTitulo.add(new Label(tarefaModel.getSubTitulo(), Color.BLACK, fonte));
         c.gridx = 0;
         c.gridy = 0;
         containerEsquerdo.add(pTituloSubTitulo, c);
