@@ -1,0 +1,37 @@
+
+package model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author daniel korban
+ */
+public class Cartao {
+    
+    private int id;
+    private List<Tarefa> listaTarefas;
+
+    public Cartao(int id) {
+        this.id = id;
+        this.listaTarefas = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Tarefa> getListaTarefas() {
+        return listaTarefas;
+    }
+
+    public void setListaTarefas(List<Tarefa> listaTarefas) {
+        this.listaTarefas = listaTarefas;
+    }
+    
+}
