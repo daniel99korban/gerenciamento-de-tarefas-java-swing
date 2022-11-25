@@ -2,7 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import view.Cartao;
+import view.CartaoView;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -17,7 +17,7 @@ import javax.swing.border.EtchedBorder;
 public class PainelProjeto extends JPanel{
     
     private String nomeProjeto;
-    private List<Cartao> cartoes;
+    private List<CartaoView> cartoes;
     
     public PainelProjeto(String nomeProjeto){
         if(nomeProjeto == null){
@@ -37,7 +37,7 @@ public class PainelProjeto extends JPanel{
      * @param y 
      */
     private void criarCartao(int id, String nomeCartao, int[] coresRGB, int x, int y){
-        Cartao c = new Cartao(nomeCartao, coresRGB);
+        CartaoView c = new CartaoView(nomeCartao, coresRGB);
         c.setSize(210, 500);
         c.posicaoX = x;
         c.posicaoY = y;
@@ -46,7 +46,7 @@ public class PainelProjeto extends JPanel{
     }
     
     public void exibirCartoes(){
-        for(Cartao c: this.cartoes){
+        for(CartaoView c: this.cartoes){
             c.setLocation(c.posicaoX, c.posicaoY);
             this.add(c);
         }

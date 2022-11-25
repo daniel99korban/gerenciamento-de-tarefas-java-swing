@@ -11,11 +11,13 @@ import javax.swing.JPanel;
  * @author danie
  */
 public class DashBoardView extends JFrame{
-    
+    // variavel global que será util nas operações com a view(desativar/ativar view em certos momentos)
+    public static DashBoardView instanciaDashBoard;
     private List<GuiasDeProjetos> guiaProjeto;
     
     public DashBoardView(String titulo){
         super(titulo);
+        instanciaDashBoard = this;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1140, 640);
         this.setLocationRelativeTo(null);
@@ -42,7 +44,7 @@ public class DashBoardView extends JFrame{
         this.add(background);
         this.setVisible(true);
     }
-    
+
     public static void main(String[] args) {
         new DashBoardView("Software de Gerenciamento de Projetos");
     }

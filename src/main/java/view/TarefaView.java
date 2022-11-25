@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -44,6 +46,14 @@ public class TarefaView extends JFrame{
         this.tarefa = tarefa;
         this.setSize(790, 450);
         this.setLocationRelativeTo(null);
+        //Adiciona um escutador de eventos para o evento de fechar o frame
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt){
+                DashBoardView.instanciaDashBoard.setEnabled(true);
+                DashBoardView.instanciaDashBoard.repaint();
+            }
+        });
     }
     
     public void iniciarComponentes(){

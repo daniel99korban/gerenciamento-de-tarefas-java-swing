@@ -3,30 +3,24 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import model.Tarefa;
 import util.ArquivosProjeto;
 import view.componente.Botao;
-import view.tratadoreventos.TratadorDeEvento;
 
 /**
  *
  * @author daniel
  */
-public class Cartao extends JPanel{
+public class CartaoView extends JPanel{
     
     public int id;
     public JLabel tituloCartao;
@@ -35,7 +29,7 @@ public class Cartao extends JPanel{
     public int posicaoX;
     public int posicaoY;
     
-    public Cartao(String title, int ...corCartao){ 
+    public CartaoView(String title, int ...corCartao){ 
         tituloCartao = new JLabel(title);
         listaTarefas = new ArrayList<>();
         tituloCartao.setForeground(Color.white);
@@ -72,7 +66,16 @@ public class Cartao extends JPanel{
         p.setLayout(new BorderLayout());
         p.add(new JLabel(tarefa.getTitulo()), BorderLayout.CENTER);
         var b = new Botao("Abrir Tarefa", Color.WHITE, new Color(163, 151,151)); 
-        b.addActionListener(new TratadorDeEvento(tarefa));
+        b.addActionListener((ActionEvent e) -> {
+            // abrir tarefa
+            if(e.getActionCommand().equals(("Abrir Tarefa"))){
+                var f = new TarefaView(tarefa);
+                f.iniciarComponentes();
+                f.construirPainelTarefa();
+                f.setVisible(true);
+                DashBoardView.instanciaDashBoard.setEnabled(false);
+            }
+        });
         p.add(b, BorderLayout.EAST);
         p.setSize(200, 200);
         p.setBorder(new LineBorder(Color.WHITE, 2));

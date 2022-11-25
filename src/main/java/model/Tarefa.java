@@ -2,7 +2,6 @@
 package model;
 
 import java.util.List;
-import view.componente.Botao;
 import view.componente.CheckBox;
 
 /**
@@ -16,7 +15,6 @@ public class Tarefa{
     private String nomeListSubTarefas;
     private List<CheckBox> checkList;
     private String descricao;
-    private Botao botaoAbrirTarefa;
 
     public Tarefa(String titulo) {
         this.titulo = titulo;
