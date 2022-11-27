@@ -1,26 +1,14 @@
 
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.*;
+import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import model.Tarefa;
 import util.ArquivosProjeto;
+import model.Tarefa;
 import view.componente.Botao;
 import view.componente.CheckBox;
 import view.componente.Label;
@@ -61,7 +49,7 @@ public class TarefaView extends JFrame{
         c.weightx = 1.0;
         c.weighty = 1.0;
 //        c.fill = GridBagConstraints.BOTH;// componente ocupa todo os espaco disponivel
-//        c.fill = GridBagConstraints.RELATIVE;
+//        c.fill = GridBagConstraints.RELATIVE;// Ocupa o tamanho necessrio para o conteudo
 //        c.fill = GridBagConstraints.NONE;// sem padding
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipadx = 5;

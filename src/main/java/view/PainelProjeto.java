@@ -1,8 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.GridLayout;
-import view.CartaoView;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -28,7 +26,7 @@ public class PainelProjeto extends JPanel{
         this.cartoes = new ArrayList<>();
         this.setSize(1090, 580);
         this.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(40, 40, 40, 40),  new EtchedBorder()));
-        this.setLayout(new GridLayout(1, 4, 40,0));
+        this.setLayout(null);
     }
     /**
      * @param nomeCartao
@@ -39,7 +37,7 @@ public class PainelProjeto extends JPanel{
      */
     private void criarCartao(Cartao cartaoModel, String nomeCartao, int[] coresRGB, int x, int y){
         CartaoView c = new CartaoView(nomeCartao, cartaoModel, coresRGB);
-        c.setSize(210, 500);
+        c.setSize(225, 60);// tamanho padrão inicial do cartão
         c.posicaoX = x;
         c.posicaoY = y;
         cartoes.add(c);
@@ -47,6 +45,8 @@ public class PainelProjeto extends JPanel{
     
     public void exibirCartoes(){
         for(CartaoView c: this.cartoes){
+            int gap = 20 * c.cartaoModel.getListaTarefas().size();
+            c.configurarExpansaoCard(c, gap);
             c.setLocation(c.posicaoX, c.posicaoY);
             this.add(c);
         }
