@@ -12,6 +12,7 @@ import model.Tarefa;
 import view.componente.Botao;
 import view.componente.CheckBox;
 import view.componente.Label;
+import view.tratadoreventos.TratadorDeEvento;
 
 /**
  *
@@ -26,12 +27,19 @@ public class TarefaView extends JFrame{
     private Botao addAnexo;
     private Botao moverCartao;
     private Botao botaoEditar;
+    private Botao excluirTarefa;
     // uma referência para tarefa a ser construida
-    private Tarefa tarefaModel;
-
-    public TarefaView(Tarefa tarefaModel){
+    private Tarefa tarefa;
+    // uma referência para uma view do cartão
+    private CartaoView cartaoView;
+    /***
+     * @param cartaoView view de onde deve vir o cartao
+     * @param tarefa tarefa a ser exibida na view da tarefa 
+     */
+    public TarefaView(CartaoView cartaoView, Tarefa tarefa){
         super("Visulizar Tarefa");
-        this.tarefaModel = tarefaModel;
+        this.tarefa = tarefa;
+        this.cartaoView = cartaoView;
         this.setSize(790, 450);
         this.setLocationRelativeTo(null);
         //Adiciona um escutador de eventos para o evento de fechar o frame
@@ -81,8 +89,8 @@ public class TarefaView extends JFrame{
         Font fonte = new Font("Arial", Font.PLAIN, 16);
 //        pTituloSubTitulo.add(new Label("Nome da Tarefa", Color.BLACK, fonteTitulo));
 //        pTituloSubTitulo.add(new Label("cartão onde se encontra a tarefa", Color.BLACK, fonte));
-        pTituloSubTitulo.add(new Label(tarefaModel.getTitulo(), Color.BLACK, fonteTitulo));
-        pTituloSubTitulo.add(new Label(tarefaModel.getSubTitulo(), Color.BLACK, fonte));
+        pTituloSubTitulo.add(new Label(tarefa.getTitulo(), Color.BLACK, fonteTitulo));
+        pTituloSubTitulo.add(new Label(tarefa.getSubTitulo(), Color.BLACK, fonte));
         c.gridx = 0;
         c.gridy = 0;
         containerEsquerdo.add(pTituloSubTitulo, c);
@@ -136,29 +144,35 @@ public class TarefaView extends JFrame{
         
         // para agrupar opções de adicionar ao cartão
         var pAddaoCartao = new JPanel();
-        pAddaoCartao.setLayout(new GridLayout(3, 1, 0, 20));
+        pAddaoCartao.setLayout(new GridLayout(4, 1, 0, 20));
         pAddaoCartao.setBackground(Color.WHITE);
         pAddaoCartao.setBorder(BorderFactory.createTitledBorder("Adicionar ao cartão"));  
         
         // criar elementos
-        String[] nomeIcon = {"check-list-simbol.png", "date-simbol.png","anexo-simbol.png"};
+        String[] nomeIcon = {"check-list-simbol.png", "date-simbol.png","anexo-simbol.png", "delete-icon.png"};
         
         // botões
         Color corFundo = new Color(217, 217, 217);
         addAnexo = new Botao("Anexo", Color.BLACK , corFundo);
         addDatas = new Botao("Datas", Color.BLACK, corFundo);
         addCheckList = new Botao("CheckList", Color.BLACK, corFundo);
+        excluirTarefa = new Botao("Excluir Tarefa", Color.WHITE, new Color(214, 16, 16));
         ImageIcon iconAnexo = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(nomeIcon[0]));
         ImageIcon iconDatas = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(nomeIcon[1]));
         ImageIcon iconCheckList = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(nomeIcon[2]));
+        ImageIcon iconExcluirTarefa = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo(nomeIcon[3]));
         addAnexo.setIcon(iconAnexo);
         addDatas.setIcon(iconDatas);
         addCheckList.setIcon(iconCheckList);
+        excluirTarefa.setIcon(iconExcluirTarefa);
+        // adicionando eventos aos botões
+        excluirTarefa.addActionListener(new TratadorDeEvento(cartaoView, tarefa));
         
         // addionando os botões ao painel
         pAddaoCartao.add(addAnexo);
         pAddaoCartao.add(addDatas);
         pAddaoCartao.add(addCheckList);
+        pAddaoCartao.add(excluirTarefa);
      
         c.gridy = 0;
         containerEsquerdo.add(pAddaoCartao, c);
@@ -180,7 +194,7 @@ public class TarefaView extends JFrame{
     }
     
     public static void main(String[] args) {
-        var f = new TarefaView(null);
+        var f = new TarefaView(null, null);
         f.iniciarComponentes();
         f.construirPainelTarefa();
         f.setVisible(true);
