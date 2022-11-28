@@ -20,6 +20,7 @@ import view.componente.Botao;
 public class TratadorDeEvento implements ActionListener{
     
     private CartaoView cartaoView;
+    private static TarefaView tarefaView;
     private Tarefa tarefaModel;
 
     public TratadorDeEvento(CartaoView cartaoView, Tarefa tarefaModel) {
@@ -66,7 +67,10 @@ public class TratadorDeEvento implements ActionListener{
             }
             cartaoView.remove(cartaoView.scroll);
             cartaoView.exibirTarefas();
-            cartaoView.configurarExpansaoCard(cartaoView, 40);
+            
+            if(res != null){// se a resposta for cancelar a expansão do card não acontece 
+                cartaoView.configurarExpansaoCard(cartaoView, 40);
+            }
             
             DashBoardView.instanciaDashBoard.repaint();
             origem.setBackground(corFundoOriginal);
@@ -90,6 +94,11 @@ public class TratadorDeEvento implements ActionListener{
             // fazer uma busca a saber qual  tarefa deseja-se remover
             for(Tarefa t : cartaoView.cartaoModel.getListaTarefas()){
                 if(tarefaModel.getId() == t.getId()){
+                    // confirmacao de remoção de cartão
+                    int res = JOptionPane.showConfirmDialog(null, "Deseja excluir tarefa ["+t.getTitulo()+"]?", "Remover Tarefa", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    if(res == 1){//  0 -> sim 1 -> não
+                        return;
+                    }
                     cartaoView.cartaoModel.removerTarefa(tarefaModel.getId());
                     break;
                 }
@@ -99,21 +108,25 @@ public class TratadorDeEvento implements ActionListener{
             cartaoView.exibirTarefas();
             // pra resolver o bug de remoção do ultimo item
             if(cartaoView.cartaoModel.getListaTarefas().size()==0){
-                cartaoView.setSize(cartaoView.getWidth(), 60);
+                cartaoView.setSize(cartaoView.getWidth(), 60);// height -> tamanho inicial do frame
             }else{
                 cartaoView.configurarExpansaoCard(cartaoView, -40);
             }
+            
+            tarefaView.setVisible(false); // fechar tarefa após a exclusão
+            DashBoardView.instanciaDashBoard.setEnabled(true);
             DashBoardView.instanciaDashBoard.repaint();
+            DashBoardView.instanciaDashBoard.setVisible(true);
         }
     }
     
     private void abrirTarefa(ActionEvent e){
          // abrir uma tarefa
         if(e.getActionCommand().equals("Abrir Tarefa")){
-            var tarefView = new TarefaView(cartaoView, tarefaModel);
-            tarefView.iniciarComponentes();
-            tarefView.construirPainelTarefa();
-            tarefView.setVisible(true);
+            tarefaView = new TarefaView(cartaoView, tarefaModel);
+            tarefaView.iniciarComponentes();
+            tarefaView.construirPainelTarefa();
+            tarefaView.setVisible(true);
             DashBoardView.instanciaDashBoard.setEnabled(false);
         }
     }

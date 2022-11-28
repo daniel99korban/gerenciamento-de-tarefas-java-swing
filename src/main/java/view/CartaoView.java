@@ -47,11 +47,11 @@ public class CartaoView extends JPanel{
         this.setBorder(new LineBorder(Color.WHITE, 1));
         this.setBackground(new Color(51, 51, 51));
         // simular tarefas no cartão(apenas teste) os dados serão recuparados de um BD
-        for(int i=1; i<=0; i++){
-            var t = new Tarefa("Tarefa " + i, i);
-            t.setSubTitulo("na lista " + tituloCartao.getText());
-            this.addTarefa(t);
-        }
+//        for(int i=1; i<=10; i++){
+//            var t = new Tarefa("Tarefa " + i, i);
+//            t.setSubTitulo("na lista " + tituloCartao.getText());
+//            this.addTarefa(t);
+//        }
         // exibir tarefas no cartão
         this.exibirTarefas();
         
