@@ -21,6 +21,11 @@ public class TratadorDeEvento implements ActionListener{
     
     private CartaoView cartaoView;
     private Tarefa tarefaModel;
+
+    public TratadorDeEvento(CartaoView cartaoView, Tarefa tarefaModel) {
+        this.cartaoView = cartaoView;
+        this.tarefaModel = tarefaModel;
+    }
     
     public TratadorDeEvento(CartaoView cartaoView) {
         this.cartaoView = cartaoView;
@@ -30,9 +35,14 @@ public class TratadorDeEvento implements ActionListener{
         this.tarefaModel = tarefaModel;
     }
     
-    
     @Override
     public void actionPerformed(ActionEvent e) {
+        adicionarTarefa(e);
+        abrirTarefa(e);
+        removerTarefa(e);
+    }
+    
+    private void adicionarTarefa(ActionEvent e) {
         // Adicionar uma nova tarefa
         if(e.getActionCommand().equals("Adicionar Tarefa")){
             Botao origem = (Botao) e.getSource();
@@ -43,7 +53,14 @@ public class TratadorDeEvento implements ActionListener{
             // válidar entrada de usuáiro(se o usuário cancelar ou deixar o input vazio, nada acontece)
             if(res != null && !res.isEmpty()){
                 // cria-se e se adiciona uma nova tarefa
-                var t = new Tarefa(res);
+                Tarefa t;
+                // verificar se o cartão esta vazio
+                if(cartaoView.cartaoModel.getListaTarefas().isEmpty()){
+                    t = new Tarefa(res, 0);
+                }else{
+                    int ultimaTarefa = cartaoView.cartaoModel.getListaTarefas().size()-1;
+                    t = new Tarefa(res, cartaoView.cartaoModel.getTarefa(ultimaTarefa).getId()+1);
+                }
                 t.setSubTitulo("na lista " + cartaoView.tituloCartao.getText());
                 cartaoView.cartaoModel.addTarefa(t);   
             }
@@ -55,14 +72,7 @@ public class TratadorDeEvento implements ActionListener{
             origem.setBackground(corFundoOriginal);
             origem.repaint();
         }
-        // abrir uma tarefa
-        else if(e.getActionCommand().equals("Abrir Tarefa")){
-            var tarefView = new TarefaView(tarefaModel);
-                tarefView.iniciarComponentes();
-                tarefView.construirPainelTarefa();
-                tarefView.setVisible(true);
-                DashBoardView.instanciaDashBoard.setEnabled(false);
-        }
+       
     }
     
     private String obterInput(){// nome de tarefa
@@ -73,6 +83,39 @@ public class TratadorDeEvento implements ActionListener{
                 new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("check-icon.png")),
                 null,
                 "sem nome");
+    }
+    
+    private void removerTarefa(ActionEvent e) {
+        if(e.getActionCommand().equals("Excluir Tarefa")){
+            // fazer uma busca a saber qual  tarefa deseja-se remover
+            for(Tarefa t : cartaoView.cartaoModel.getListaTarefas()){
+                if(tarefaModel.getId() == t.getId()){
+                    cartaoView.cartaoModel.removerTarefa(tarefaModel.getId());
+                    break;
+                }
+            }
+            // atualizar painel atual de tarefas;
+            cartaoView.remove(cartaoView.scroll);
+            cartaoView.exibirTarefas();
+            // pra resolver o bug de remoção do ultimo item
+            if(cartaoView.cartaoModel.getListaTarefas().size()==0){
+                cartaoView.setSize(cartaoView.getWidth(), 60);
+            }else{
+                cartaoView.configurarExpansaoCard(cartaoView, -40);
+            }
+            DashBoardView.instanciaDashBoard.repaint();
+        }
+    }
+    
+    private void abrirTarefa(ActionEvent e){
+         // abrir uma tarefa
+        if(e.getActionCommand().equals("Abrir Tarefa")){
+            var tarefView = new TarefaView(cartaoView, tarefaModel);
+            tarefView.iniciarComponentes();
+            tarefView.construirPainelTarefa();
+            tarefView.setVisible(true);
+            DashBoardView.instanciaDashBoard.setEnabled(false);
+        }
     }
     
 }
