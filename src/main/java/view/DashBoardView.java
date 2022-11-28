@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- *
  * @author danie
  */
 public class DashBoardView extends JFrame{

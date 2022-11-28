@@ -21,6 +21,8 @@ public class CartaoView extends JPanel{
     public JScrollPane scroll;
     // uma referência para o cartão a ser construido
     public Cartao cartaoModel;
+    // uma referência para o cartão view
+    public CartaoView cartaoView;
     public Botao botaoAddTarefa;
     public int posicaoX;
     public int posicaoY;
@@ -28,6 +30,7 @@ public class CartaoView extends JPanel{
     public CartaoView(String title, Cartao cartaoModel, int ...corCartao){ 
         tituloCartao = new JLabel(title);
         this.cartaoModel = cartaoModel;
+        this.cartaoView = this;
         tituloCartao.setForeground(Color.white);
         
         var caixaTitulocartao = new JPanel();
@@ -44,11 +47,11 @@ public class CartaoView extends JPanel{
         this.setBorder(new LineBorder(Color.WHITE, 1));
         this.setBackground(new Color(51, 51, 51));
         // simular tarefas no cartão(apenas teste) os dados serão recuparados de um BD
-//        for(int i=1; i<=0; i++){
-//            var t = new Tarefa("Tarefa " + i);
-//            t.setSubTitulo("na lista " + tituloCartao.getText());
-//            this.addTarefa(t);
-//        }
+        for(int i=1; i<=0; i++){
+            var t = new Tarefa("Tarefa " + i, i);
+            t.setSubTitulo("na lista " + tituloCartao.getText());
+            this.addTarefa(t);
+        }
         // exibir tarefas no cartão
         this.exibirTarefas();
         
@@ -64,7 +67,7 @@ public class CartaoView extends JPanel{
         painel.add(new JLabel(tarefa.getTitulo()), BorderLayout.WEST);
         var botao = new Botao("Abrir Tarefa", Color.WHITE, new Color(163, 151,151));
         botao.setBorderPainted(false);
-        botao.addActionListener(new TratadorDeEvento(tarefa));
+        botao.addActionListener(new TratadorDeEvento(this, tarefa));
         painel.add(botao, BorderLayout.EAST);
         painel.setSize(200, 200);
         painel.setBorder(new LineBorder(Color.WHITE, 2));
@@ -88,7 +91,7 @@ public class CartaoView extends JPanel{
     }
     
     /***
-     * função/gambiarra para que a view se comporte de maneira adequada
+     * função/gambiarra para que a view se comporte de maneira adequada apos cada inclusão/exclusão
      * @param cartaoView
      * @param gap valor a ser calculado a medida que o cartão se expande coma inserção de tarefas
      */

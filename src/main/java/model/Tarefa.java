@@ -10,14 +10,24 @@ import view.componente.CheckBox;
  */
 public class Tarefa{
     
+    private int id;
     private String titulo;
     private String subTitulo;// cartão onde se encontra a tarefa
     private String nomeListSubTarefas;
     private List<CheckBox> checkList;
     private String descricao;
 
-    public Tarefa(String titulo) {
+    public Tarefa(String titulo, int id) {
         this.titulo = titulo;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitulo() {
