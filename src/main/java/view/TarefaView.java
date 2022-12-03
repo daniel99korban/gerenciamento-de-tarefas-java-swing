@@ -13,6 +13,7 @@ import view.componente.Botao;
 import view.componente.CheckBox;
 import view.componente.Label;
 import view.tratadoreventos.TratadorDeEvento;
+import java.util.List;
 
 /**
  *
@@ -32,14 +33,18 @@ public class TarefaView extends JFrame{
     private Tarefa tarefa;
     // uma referência para uma view do cartão
     private CartaoView cartaoView;
+    // uma referência para uma lista de cartoes view
+    private List<CartaoView> cartoesView;
     /***
+     * @param cartoesView
      * @param cartaoView view de onde deve vir o cartao
      * @param tarefa tarefa a ser exibida na view da tarefa 
      */
-    public TarefaView(CartaoView cartaoView, Tarefa tarefa){
+    public TarefaView(List<CartaoView> cartoesView, CartaoView cartaoView, Tarefa tarefa){
         super("Visulizar Tarefa");
         this.tarefa = tarefa;
         this.cartaoView = cartaoView;
+        this.cartoesView = cartoesView;
         this.setSize(790, 450);
         this.setLocationRelativeTo(null);
         //Adiciona um escutador de eventos para o evento de fechar o frame
@@ -166,7 +171,7 @@ public class TarefaView extends JFrame{
         addCheckList.setIcon(iconCheckList);
         excluirTarefa.setIcon(iconExcluirTarefa);
         // adicionando eventos aos botões
-        excluirTarefa.addActionListener(new TratadorDeEvento(cartaoView, tarefa));
+        excluirTarefa.addActionListener(new TratadorDeEvento(null, cartaoView, tarefa));
         
         // addionando os botões ao painel
         pAddaoCartao.add(addAnexo);
@@ -179,6 +184,7 @@ public class TarefaView extends JFrame{
         c.gridy = 1;
         moverCartao = new Botao("Mover Cartão", Color.WHITE);
         moverCartao.setSize(40, 20);
+        moverCartao.addActionListener(new TratadorDeEvento(cartoesView, cartaoView, tarefa));
         containerEsquerdo.add(moverCartao, c);
         redefinirGrid();
         return containerEsquerdo;
@@ -194,10 +200,10 @@ public class TarefaView extends JFrame{
     }
     
     public static void main(String[] args) {
-        var f = new TarefaView(null, null);
-        f.iniciarComponentes();
-        f.construirPainelTarefa();
-        f.setVisible(true);
+//        var f = new TarefaView(null, null);
+//        f.iniciarComponentes();
+//        f.construirPainelTarefa();
+//        f.setVisible(true);
     }
     
 }

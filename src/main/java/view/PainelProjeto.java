@@ -14,14 +14,20 @@ import model.Cartao;
  * @author danie
  */
 public class PainelProjeto extends JPanel{
-    
+    // variavel global que será util nas operações de movimentação dos cartões
+    public static PainelProjeto instanciaPainelProjeto;
     private String nomeProjeto;
     private List<CartaoView> cartoes;
+
+    public List<CartaoView> getCartoes() {
+        return cartoes;
+    }
     
     public PainelProjeto(String nomeProjeto){
         if(nomeProjeto == null){
             nomeProjeto = "undefined";
         }
+        this.instanciaPainelProjeto = this;
         this.nomeProjeto = nomeProjeto;
         this.cartoes = new ArrayList<>();
         this.setSize(1090, 580);
@@ -36,7 +42,7 @@ public class PainelProjeto extends JPanel{
      * @param y 
      */
     private void criarCartao(Cartao cartaoModel, String nomeCartao, int[] coresRGB, int x, int y){
-        CartaoView c = new CartaoView(nomeCartao, cartaoModel, coresRGB);
+        CartaoView c = new CartaoView(cartoes, nomeCartao, cartaoModel, coresRGB);
         c.setSize(225, 60);// tamanho padrão inicial do cartão
         c.posicaoX = x;
         c.posicaoY = y;
@@ -59,10 +65,10 @@ public class PainelProjeto extends JPanel{
         int[] corCartao3 = {34, 127, 35};// verde
         int[] corCartao4 = {182, 68, 246};// margenta
         // model
-        Cartao c1 = new Cartao(1);
-        Cartao c2 = new Cartao(2);
-        Cartao c3 = new Cartao(3);
-        Cartao c4 = new Cartao(4);
+        Cartao c1 = new Cartao(0);
+        Cartao c2 = new Cartao(1);
+        Cartao c3 = new Cartao(2);
+        Cartao c4 = new Cartao(3);
         // view
         this.criarCartao(c1, "A fazer", corCartao1, 50, 50);
         this.criarCartao(c2, "A fazer Hoje", corCartao2, 320, 50);

@@ -7,6 +7,7 @@ import javax.swing.border.LineBorder;
 import model.Cartao;
 import model.Tarefa;
 import util.ArquivosProjeto;
+import java.util.List;
 import view.componente.Botao;
 import view.tratadoreventos.TratadorDeEvento;
 
@@ -23,14 +24,17 @@ public class CartaoView extends JPanel{
     public Cartao cartaoModel;
     // uma referência para o cartão view
     public CartaoView cartaoView;
+    // uma referência para uma lista de cartões view
+    public List<CartaoView> cartoesView;
     public Botao botaoAddTarefa;
     public int posicaoX;
     public int posicaoY;
     
-    public CartaoView(String title, Cartao cartaoModel, int ...corCartao){ 
+    public CartaoView(List<CartaoView> cartoesView, String title, Cartao cartaoModel, int ...corCartao){
         tituloCartao = new JLabel(title);
         this.cartaoModel = cartaoModel;
         this.cartaoView = this;
+        this.cartoesView = cartoesView;
         tituloCartao.setForeground(Color.white);
         
         var caixaTitulocartao = new JPanel();
@@ -67,7 +71,7 @@ public class CartaoView extends JPanel{
         painel.add(new JLabel(tarefa.getTitulo()), BorderLayout.WEST);
         var botao = new Botao("Abrir Tarefa", Color.WHITE, new Color(163, 151,151));
         botao.setBorderPainted(false);
-        botao.addActionListener(new TratadorDeEvento(this, tarefa));
+        botao.addActionListener(new TratadorDeEvento(cartoesView, this, tarefa));
         painel.add(botao, BorderLayout.EAST);
         painel.setSize(200, 200);
         painel.setBorder(new LineBorder(Color.WHITE, 2));
