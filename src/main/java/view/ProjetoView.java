@@ -13,9 +13,9 @@ import model.Cartao;
  *
  * @author danie
  */
-public class PainelProjeto extends JPanel{
-    // variavel global que será util nas operações de movimentação dos cartões
-    public static PainelProjeto instanciaPainelProjeto;
+public class ProjetoView extends JPanel{
+    // variavel global que será util nas operações de movimentação dos cartões(acho que não é uma boa ideia)
+    public static ProjetoView instanciaPainelProjeto;
     private String nomeProjeto;
     private List<CartaoView> cartoes;
 
@@ -23,7 +23,7 @@ public class PainelProjeto extends JPanel{
         return cartoes;
     }
     
-    public PainelProjeto(String nomeProjeto){
+    public ProjetoView(String nomeProjeto){
         if(nomeProjeto == null){
             nomeProjeto = "undefined";
         }
@@ -41,7 +41,7 @@ public class PainelProjeto extends JPanel{
      * @param x  
      * @param y 
      */
-    private void criarCartao(Cartao cartaoModel, String nomeCartao, int[] coresRGB, int x, int y){
+    private void construirCartao(Cartao cartaoModel, String nomeCartao, int[] coresRGB, int x, int y){
         CartaoView c = new CartaoView(cartoes, nomeCartao, cartaoModel, coresRGB);
         c.setSize(225, 60);// tamanho padrão inicial do cartão
         c.posicaoX = x;
@@ -70,10 +70,10 @@ public class PainelProjeto extends JPanel{
         Cartao c3 = new Cartao(2);
         Cartao c4 = new Cartao(3);
         // view
-        this.criarCartao(c1, "A fazer", corCartao1, 50, 50);
-        this.criarCartao(c2, "A fazer Hoje", corCartao2, 320, 50);
-        this.criarCartao(c3, "Em Progresso", corCartao3, 590, 50);
-        this.criarCartao(c4, "Feito", corCartao4, 860, 50);
+        this.construirCartao(c1, "A fazer", corCartao1, 50, 50);
+        this.construirCartao(c2, "A fazer Hoje", corCartao2, 320, 50);
+        this.construirCartao(c3, "Em Progresso", corCartao3, 590, 50);
+        this.construirCartao(c4, "Feito", corCartao4, 860, 50);
         this.exibirCartoes();
         this.setBackground(new Color(30, 30, 30));
         this.setVisible(true);  
@@ -87,7 +87,7 @@ public class PainelProjeto extends JPanel{
         this.nomeProjeto = nomeProjeto;
     }
 //    public static void main(String[] args) {
-//        var pj = new PainelProjeto("teste");
+//        var pj = new ProjetoView("teste");
 //        var f = new JFrame();
 //        f.setSize(pj.getWidth(), pj.getHeight());
 //        pj.init();
