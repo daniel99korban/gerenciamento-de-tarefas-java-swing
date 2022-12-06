@@ -12,7 +12,7 @@ import javax.swing.JTabbedPane;
  */
 public class GuiasDeProjetos extends JTabbedPane{
     
-    private List<PainelProjeto> projetos; 
+    private List<ProjetoView> projetos; 
 
     public GuiasDeProjetos() {
         this.projetos = new ArrayList<>();
@@ -20,7 +20,7 @@ public class GuiasDeProjetos extends JTabbedPane{
     
     public void addProjeto(String nomeProjeto){
         // painel de tarefas
-        PainelProjeto pj = new PainelProjeto(nomeProjeto);
+        ProjetoView pj = new ProjetoView(nomeProjeto);
         pj.setBounds(0, 36, 1140, 580);
         projetos.add(pj);
     }
@@ -32,13 +32,13 @@ public class GuiasDeProjetos extends JTabbedPane{
 //        }
 //    }
 
-    public List<PainelProjeto> getProjetos() {
+    public List<ProjetoView> getProjetos() {
         return projetos;
     }
     
     public void init(){
 //        this.simulacao();
-        for(PainelProjeto pj : this.projetos){
+        for(ProjetoView pj : this.projetos){
             pj.init();
             pj.exibirCartoes();
             this.addTab(pj.getNomeProjeto() ,pj);

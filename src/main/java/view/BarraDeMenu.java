@@ -34,18 +34,21 @@ public class BarraDeMenu extends JToolBar{
         var labelPencilIcon = new JLabel("undefined", pencilIcon,JLabel.CENTER); 
         labelPencilIcon.setForeground(Color.WHITE);
         // icon de login de usuario
-        var nomeUsuario = new Label("A");
-        Icon circulo = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("Ellipse.png"));
-        var labelCirculo = new JLabel("", circulo,JLabel.CENTER); 
+        var nomeUsuario = new Label("Conectado");
+        nomeUsuario.setForeground(Color.WHITE);
+//        Icon circulo = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("Ellipse.png"));
+//        var labelCirculo = new JLabel("", circulo,JLabel.CENTER); 
         
         var painelLoginUsu = new JPanel();
         painelLoginUsu.setLayout(null);
         painelLoginUsu.setBackground(new Color(51, 51, 51));
         // posicionando os elementos
-        nomeUsuario.setBounds(277, -22, 80, 80);
-        labelCirculo.setBounds(240, -22, 80, 80);
+//        nomeUsuario.setBounds(277, -22, 80, 80);
+//        labelCirculo.setBounds(240, -22, 80, 80);
+        nomeUsuario.setBounds(240, -22, 80, 80);
         painelLoginUsu.add(nomeUsuario);
-        painelLoginUsu.add(labelCirculo);
+//        painelLoginUsu.add(labelCirculo);
+//        painelLoginUsu.add(labelCirculo);
         // adicionar elementos
         this.add(labelPencilIcon);
         this.add(painelLoginUsu);
