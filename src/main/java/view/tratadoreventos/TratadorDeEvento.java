@@ -12,11 +12,14 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import model.Tarefa;
 import util.ArquivosProjeto;
 import view.CartaoView;
 import view.DashBoardView;
-import view.PainelProjeto;
+import view.ProjetoView;
 import view.TarefaView;
 import view.componente.Botao;
 
@@ -24,7 +27,7 @@ import view.componente.Botao;
  *
  * @author danie
  */
-public class TratadorDeEvento implements ActionListener, MouseListener{
+public class TratadorDeEvento implements ActionListener, MouseListener, TreeSelectionListener{
     
     private CartaoView cartaoView;
     private List<CartaoView> cartoesView;
@@ -179,7 +182,7 @@ public class TratadorDeEvento implements ActionListener, MouseListener{
             // varer uma lista de radio buttons para saber qual opção escolhida
             for(JRadioButton rb : botoes){
                 if(rb.isSelected()){
-                    PainelProjeto.instanciaPainelProjeto.getCartoes();// lista de cartõesView
+                    ProjetoView.instanciaPainelProjeto.getCartoes();// lista de cartõesView
                     // remover a tarefa desta lista atual
                     // copia da tarefa a ser removida
                     Tarefa tarefa = cartaoView.cartaoModel.getTarefa(tarefaModel.getId());
@@ -244,6 +247,18 @@ public class TratadorDeEvento implements ActionListener, MouseListener{
                 return;
             }
             ((JRadioButton) origem).setForeground(Color.BLACK);
+        }
+    }
+
+    @Override
+    public void valueChanged(TreeSelectionEvent e) {
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) e
+            .getPath().getLastPathComponent();
+        if(node.isRoot()){
+            System.out.println("Esse é o nó raiz");
+        }
+        else{
+            System.out.println("você selecionou " + node);
         }
     }
     
