@@ -3,20 +3,35 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
 /**
  *
  * @author daniel korban
  */
+@Entity
+@Table(name = "cartao")
 public class Cartao {
     
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartao")
     private List<Tarefa> listaTarefas;
+    
+    @ManyToOne
+    @JoinColumn(name = "projeto_id", nullable = false)
+    private  Projeto projeto;
 
-    public Cartao(int id) {
-        this.id = id;
+//    public Cartao(int id) {
+//        this.id = id;
+//        this.listaTarefas = new ArrayList<>();
+//    }
+    public Cartao() {
         this.listaTarefas = new ArrayList<>();
     }
+
+//    public Cartao() {}
 
     public int getId() {
         return id;
@@ -50,5 +65,34 @@ public class Cartao {
 //    public void setListaTarefas(List<Tarefa> listaTarefas) {
 //        this.listaTarefas = listaTarefas;
 //    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cartao other = (Cartao) obj;
+        return this.id == other.id;
+    }
+    // metodos usados pelo jpa
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
+    }
     
 }
