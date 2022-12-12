@@ -1,19 +1,11 @@
 
 package view;
 
-import view.componente.Botao;
-import view.componente.CheckBox;
-import view.componente.password;
-import view.componente.TextField;
-import view.componente.Label;
+import view.componente.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import util.ArquivosProjeto;
 
 /**

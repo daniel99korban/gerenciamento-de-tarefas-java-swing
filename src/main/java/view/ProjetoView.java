@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import model.Cartao;
+import model.Projeto;
 
 /**
  *
@@ -16,6 +17,7 @@ import model.Cartao;
 public class ProjetoView extends JPanel{
     // variavel global que será util nas operações de movimentação dos cartões(acho que não é uma boa ideia)
     public static ProjetoView instanciaPainelProjeto;
+    private Projeto projetoModel;// teste
     private String nomeProjeto;
     private List<CartaoView> cartoes;
 
