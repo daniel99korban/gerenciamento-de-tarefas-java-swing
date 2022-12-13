@@ -2,10 +2,7 @@
 package view.tratadoreventos;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,18 +13,10 @@ import javax.swing.JRadioButton;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import model.Tarefa;
-import model.Usuario;
-import util.ArquivosProjeto;
-import util.GerenteEntidade;
-import view.CartaoView;
-import view.DashBoardView;
-import view.LoginView;
-import view.ProjetoView;
-import view.TarefaView;
-import view.componente.Botao;
-import view.componente.TextField;
-import view.componente.password;
+import model.*;
+import util.*;
+import view.*;
+import view.componente.*;
 
 /**
  *
@@ -107,10 +96,10 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         if(e.getActionCommand().equals("Excluir Tarefa")){
             removerTarefa("excluir");
         }
-//        if(e.getActionCommand().equals("Mover Cartão")){
-//            moverCartao(e);
-//        }
-       abrirTarefa(e);
+        if(e.getActionCommand().equals("Mover Cartão")){
+            moverCartao(e);
+        }
+        abrirTarefa(e);
     }
     
     private void adicionarTarefa(ActionEvent e) {
@@ -166,31 +155,31 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
      * @param operacao vai permitir o seu reaproveitamento
      */
     private void removerTarefa(String operacao) {
-        // fazer uma busca a saber qual  tarefa deseja-se remover
-        for(Tarefa t : cartaoView.cartaoModel.getListaTarefas()){
-            if(tarefaModel.getId() == t.getId()){
-                // confirmacao de remoção de cartão
-                if(operacao.equalsIgnoreCase("excluir")){
-                    int res = JOptionPane.showConfirmDialog(null, "Deseja excluir tarefa ["+t.getTitulo()+"]?", "Remover Tarefa", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if(res == 1){//  0 -> sim 1 -> não
-                        return;
+        if(!operacao.equalsIgnoreCase("mover")){// so atualizar tamanho do cartao
+            // fazer uma busca a saber qual  tarefa deseja-se remover
+            for(Tarefa t : cartaoView.cartaoModel.getListaTarefas()){
+                if(tarefaModel.getId() == t.getId()){
+                    // confirmacao de remoção de cartão
+                    if(operacao.equalsIgnoreCase("excluir")){
+                        int res = JOptionPane.showConfirmDialog(null, "Deseja excluir tarefa ["+t.getTitulo()+"]?", "Remover Tarefa", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                        if(res == 1){//  0 -> sim 1 -> não
+                            return;
+                        }
                     }
+                    // atualizar remoção de tarefa no BD
+                    Tarefa tarefaResult = manager.find(Tarefa.class, t.getId());
+                    manager.getTransaction().begin();
+                    manager.remove(tarefaResult);
+                    //cartaoView.cartaoModel.removerTarefa(tarefaModel.getId());
+                    manager.getTransaction().commit();
+                    break;
                 }
-                // atualizar remoção de tarefa no BD
-                Tarefa tarefaResult = manager.find(Tarefa.class, t.getId());
-                manager.getTransaction().begin();
-                manager.remove(tarefaResult);
-                //cartaoView.cartaoModel.removerTarefa(tarefaModel.getId());
-                manager.getTransaction().commit();
-              
-//        entityManager.remove(pessoaResult);
-//        entityManager.getTransaction().commit();
-                break;
             }
         }
         // atualizar painel atual de tarefas;
         cartaoView.remove(cartaoView.scroll);
         cartaoView.exibirTarefas();
+        
         // pra resolver o bug de remoção do ultimo item
         if(cartaoView.cartaoModel.getListaTarefas().size()==0){
             cartaoView.setSize(cartaoView.getWidth(), 60);// height -> tamanho inicial do frame
@@ -215,62 +204,68 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         }
     }
 
-//    private void moverCartao(ActionEvent e) {
-//        // titulos para as opcoes
-//        String[] labels = {"A Fazer","A Fazer Hoje", "Em Progresso", "Feito"};
-//
-//        var opcoes = new ButtonGroup();
-//        List<JRadioButton> botoes = new ArrayList<>();
-//        Object[] params = new Object[labels.length];
-//        for(int i=0; i<labels.length; i++){
-//            JRadioButton radioButon = new JRadioButton(labels[i], false);
-//            botoes.add(radioButon);
-//            // indentificar cartão onde se econtra a tarefa exibida
-//            if(labels[i].equalsIgnoreCase(cartaoView.tituloCartao.getText())){
-//                radioButon.setForeground(Color.GREEN);
-//                radioButon.setSelected(true);
-//            }
-//            // adicionando eventos
-//            radioButon.addMouseListener(new TratadorDeEvento());
-//            opcoes.add(radioButon);
-//            params[i] = radioButon;
-//        }
-//
-//        String message = "Pra onde você deseja mover o cartão?";
-//        int res = JOptionPane.showConfirmDialog(null, params, "Disconnect Products", JOptionPane.YES_NO_OPTION);
-//        // 0 -> sim | 1 -> não
-//        if(res == 0){
-//            // varer uma lista de radio buttons para saber qual opção escolhida
-//            for(JRadioButton rb : botoes){
-//                if(rb.isSelected()){
-//                    ProjetoView.instanciaPainelProjeto.getCartoes();// lista de cartõesView
-//                    // remover a tarefa desta lista atual
-//                    // copia da tarefa a ser removida
-//                    Tarefa tarefa = cartaoView.cartaoModel.getTarefa(tarefaModel.getId());
-//                    // remover do model original
-//                    removerTarefa("mover");// apenas atualizar sua atual localização
-//                    // recuperando a tarefa para adiciona-la em outro cartão
-//                    this.tarefaModel = tarefa;// parei aqui
-//                    // atualizar cartão view
-//                    for(CartaoView cartoesView : this.cartoesView){
-//                        if(rb.getText().equalsIgnoreCase(cartoesView.tituloCartao.getText())){
-//                            cartaoView = cartoesView;
-//                            break;
-//                        }
-//                    }
-//                    // adicionar na lista indicada
-//                    tarefaModel.setSubTitulo("na lista " + cartaoView.tituloCartao.getText());
-//                    cartaoView.cartaoModel.addTarefa(tarefaModel);  
-//                    cartaoView.remove(cartaoView.scroll);
-//                    cartaoView.exibirTarefas();
-//                    // expandir cartão de tarefa
-//                    cartaoView.configurarExpansaoCard(cartaoView, 40);
-//                    DashBoardView.instanciaDashBoard.repaint();
-//                    break;
-//                }
-//            }
-//        }
-//    }
+    private void moverCartao(ActionEvent e) {
+        // titulos para as opcoes
+        String[] labels = {"A Fazer","A Fazer Hoje", "Em Progresso", "Feito"};
+
+        var opcoes = new ButtonGroup();
+        List<JRadioButton> botoes = new ArrayList<>();
+        Object[] params = new Object[labels.length];
+        for(int i=0; i<labels.length; i++){
+            JRadioButton radioButon = new JRadioButton(labels[i], false);
+            botoes.add(radioButon);
+            // indentificar cartão onde se econtra a tarefa exibida
+            if(labels[i].equalsIgnoreCase(cartaoView.tituloCartao.getText())){
+                radioButon.setForeground(Color.GREEN);
+                radioButon.setSelected(true);
+            }
+            // adicionando eventos
+            radioButon.addMouseListener(new TratadorDeEvento());
+            opcoes.add(radioButon);
+            params[i] = radioButon;
+        }
+
+        String message = "Pra onde você deseja mover o cartão?";
+        int res = JOptionPane.showConfirmDialog(null, params, "Disconnect Products", JOptionPane.YES_NO_OPTION);
+        // 0 -> sim | 1 -> não
+        if(res == 0){
+            // varer uma lista de radio buttons para saber qual opção escolhida
+            for(JRadioButton rb : botoes){
+                if(rb.isSelected()){
+                    ProjetoView.instanciaPainelProjeto.getCartoes();// lista de cartõesView
+                    // atualizar remoção de tarefa no BD
+                    Tarefa tarefaResult = manager.find(Tarefa.class, tarefaModel.getId());
+                    removerTarefa("mover");// apenas atualizar sua atual localização
+                    // recuperando a tarefa para adiciona-la em outro cartão
+                    this.tarefaModel = tarefaResult;
+                    // atualizar cartão view
+                    for(CartaoView cartoesView : this.cartoesView){
+                        if(rb.getText().equalsIgnoreCase(cartoesView.tituloCartao.getText())){
+                            cartaoView = cartoesView;
+                            break;
+                        }
+                    }
+                    
+                    // adicionar na lista indicada atualizar no BD
+                    manager.getTransaction().begin();
+                    tarefaModel.setSubTitulo("na lista " + cartaoView.tituloCartao.getText());
+                    
+                    // fundamental para que o join funcione
+                    tarefaModel.setCartao(cartaoView.cartaoModel);
+                    manager.persist(tarefaModel); 
+                    manager.getTransaction().commit();
+                    
+                    // Atualizar view
+                    cartaoView.remove(cartaoView.scroll);
+                    cartaoView.exibirTarefas();
+                    // expandir cartão de tarefa
+                    cartaoView.configurarExpansaoCard(cartaoView, 40);
+                    DashBoardView.instanciaDashBoard.repaint();
+                    break;
+                }
+            }
+        }
+    }
     
     
     
