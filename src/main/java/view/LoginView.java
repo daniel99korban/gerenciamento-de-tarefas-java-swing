@@ -40,10 +40,10 @@ public class LoginView extends JFrame {
         formLogin.add(new Label("Cadastre-se", Color.WHITE, fontem)).setBounds(225, 90, 100,30);
        // label.setFont(new Font("Times new Roman", Font.BOLD, 20));
         formLogin.add(new Label("E-mail", Color.WHITE, fonte)).setBounds(70, 120, 110, 40);
-        email = new TextField ("daniel@gmail.com", Color.GRAY);
+        email = new TextField ("", Color.GRAY);
         formLogin.add(email).setBounds(70, 160, 360, 40);
         formLogin.add(new Label ("Senha", Color.WHITE, fonte)).setBounds(70, 220, 110, 40);
-        senha = new password ("123", Color.GRAY);
+        senha = new password ("", Color.GRAY);
         formLogin.add(senha).setBounds(70, 260, 360, 40);
         
         botaoEntrar = new Botao("Entrar");

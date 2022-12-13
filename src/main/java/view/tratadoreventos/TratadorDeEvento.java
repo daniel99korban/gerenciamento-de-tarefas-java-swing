@@ -74,6 +74,8 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
                 // chamar o projeto com todos os dados do usuario
                 DashBoardView dashBoard = new DashBoardView("Software de Gerenciamento de Projetos");
             }else{
+                JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos!");
+                        //showConfirmDialog(null, "Usuario ou senha Incorretos!", "não autenticado", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
                 System.out.println("usuario não registrado! :(");
             }
         }
@@ -130,9 +132,10 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         
         if(res != null){// se a resposta for cancelar a expansão do card não acontece 
             cartaoView.configurarExpansaoCard(cartaoView, 40);
-            cartaoView.remove(cartaoView.scroll);
-            cartaoView.exibirTarefas();
         }
+        
+        cartaoView.remove(cartaoView.scroll);
+        cartaoView.exibirTarefas();
 
         DashBoardView.instanciaDashBoard.repaint();
         origem.setBackground(corFundoOriginal);
