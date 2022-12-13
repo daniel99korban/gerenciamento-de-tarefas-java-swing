@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.*;
 import util.ArquivosProjeto;
+import view.tratadoreventos.TratadorDeEvento;
 
 /**
  *
@@ -19,6 +20,10 @@ public class LoginView extends JFrame {
     Font fonteTitulo = new Font("Arial", Font.BOLD, 37);
     Font fonte = new Font("Arial", Font.PLAIN, 16);
     Font fontem = new Font("Arial", Font.PLAIN, 12);
+    // email e senha
+    TextField email;
+    password senha;
+    Botao botaoEntrar;
     
     public LoginView (String titulo){
         JPanel background = new JPanel();
@@ -35,10 +40,15 @@ public class LoginView extends JFrame {
         formLogin.add(new Label("Cadastre-se", Color.WHITE, fontem)).setBounds(225, 90, 100,30);
        // label.setFont(new Font("Times new Roman", Font.BOLD, 20));
         formLogin.add(new Label("E-mail", Color.WHITE, fonte)).setBounds(70, 120, 110, 40);
-        formLogin.add(new TextField ("", Color.GRAY)).setBounds(70, 160, 360, 40);
+        email = new TextField ("daniel@gmail.com", Color.GRAY);
+        formLogin.add(email).setBounds(70, 160, 360, 40);
         formLogin.add(new Label ("Senha", Color.WHITE, fonte)).setBounds(70, 220, 110, 40);
-        formLogin.add(new password ("", Color.GRAY)).setBounds(70, 260, 360, 40);
-        formLogin.add(new Botao("Entrar")).setBounds(70, 350, 360, 40);
+        senha = new password ("123", Color.GRAY);
+        formLogin.add(senha).setBounds(70, 260, 360, 40);
+        
+        botaoEntrar = new Botao("Entrar");
+        botaoEntrar.addActionListener(new TratadorDeEvento(email, senha, this));
+        formLogin.add(botaoEntrar).setBounds(70, 350, 360, 40);
         formLogin.add(new CheckBox("Continue logado", margentaPersonalizado)).setBounds(70, 300, 150, 40);
         formLogin.setBackground(this.margentaPersonalizado);
         formLogin.add(new Label("esqueceu a senha?", Color.WHITE, fontem)).setBounds(225, 300, 160,40);

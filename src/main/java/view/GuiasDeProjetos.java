@@ -8,21 +8,21 @@ import javax.swing.JTabbedPane;
 /**
  *
  * @author danie
- * contem uma lista de projetos
+ contem uma lista de projetosView
  */
 public class GuiasDeProjetos extends JTabbedPane{
     
-    private List<ProjetoView> projetos; 
+    private List<ProjetoView> projetosView; 
 
     public GuiasDeProjetos() {
-        this.projetos = new ArrayList<>();
+        this.projetosView = new ArrayList<>();
     }
     
     public void addProjeto(String nomeProjeto){
         // painel de tarefas
         ProjetoView pj = new ProjetoView(nomeProjeto);
         pj.setBounds(0, 36, 1140, 580);
-        projetos.add(pj);
+        projetosView.add(pj);
     }
     
 //    public void simulacao(){
@@ -33,17 +33,18 @@ public class GuiasDeProjetos extends JTabbedPane{
 //    }
 
     public List<ProjetoView> getProjetos() {
-        return projetos;
+        return projetosView;
     }
     
     public void init(){
+        System.out.println("chamou init dentro de guas projetos");
 //        this.simulacao();
-        for(ProjetoView pj : this.projetos){
+        for(ProjetoView pj : this.projetosView){
             pj.init();
             pj.exibirCartoes();
             this.addTab(pj.getNomeProjeto() ,pj);
         }
-        this.setSelectedIndex(0); //selecionado
+        //this.setSelectedIndex(0); //selecionado
     }
 //    public static void main(String[] args) {
 //        var f = new JFrame();

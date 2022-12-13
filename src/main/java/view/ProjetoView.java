@@ -3,12 +3,15 @@ package view;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import model.Cartao;
 import model.Projeto;
+import util.GerenteEntidade;
+import view.tratadoreventos.TratadorDeEvento;
 
 /**
  *
@@ -19,19 +22,24 @@ public class ProjetoView extends JPanel{
     public static ProjetoView instanciaPainelProjeto;
     private Projeto projetoModel;// teste
     private String nomeProjeto;
-    private List<CartaoView> cartoes;
+    private List<CartaoView> cartoesView;
 
     public List<CartaoView> getCartoes() {
-        return cartoes;
+        return cartoesView;
     }
     
     public ProjetoView(String nomeProjeto){
         if(nomeProjeto == null){
             nomeProjeto = "undefined";
         }
+        // recuparar projeto do banco de dados
+        var manager = GerenteEntidade.getGerenteDeEntidade();
+        Projeto p = manager.find(Projeto.class, TratadorDeEvento.usuarioLogado.getId());
+        this.projetoModel = p;
+        
         this.instanciaPainelProjeto = this;
         this.nomeProjeto = nomeProjeto;
-        this.cartoes = new ArrayList<>();
+        this.cartoesView = new ArrayList<>();
         this.setSize(1090, 580);
         this.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(40, 40, 40, 40),  new EtchedBorder()));
         this.setLayout(null);
@@ -44,15 +52,15 @@ public class ProjetoView extends JPanel{
      * @param y 
      */
     private void construirCartao(Cartao cartaoModel, String nomeCartao, int[] coresRGB, int x, int y){
-        CartaoView c = new CartaoView(cartoes, nomeCartao, cartaoModel, coresRGB);
+        CartaoView c = new CartaoView(cartoesView, nomeCartao, cartaoModel, coresRGB);
         c.setSize(225, 60);// tamanho padrão inicial do cartão
         c.posicaoX = x;
         c.posicaoY = y;
-        cartoes.add(c);
+        cartoesView.add(c);
     }
     
     public void exibirCartoes(){
-        for(CartaoView c: this.cartoes){
+        for(CartaoView c: this.cartoesView){
             int gap = 20 * c.cartaoModel.getListaTarefas().size();
             c.configurarExpansaoCard(c, gap);
             c.setLocation(c.posicaoX, c.posicaoY);
@@ -67,10 +75,10 @@ public class ProjetoView extends JPanel{
         int[] corCartao3 = {34, 127, 35};// verde
         int[] corCartao4 = {182, 68, 246};// margenta
         // model
-        Cartao c1 = new Cartao(0);
-        Cartao c2 = new Cartao(1);
-        Cartao c3 = new Cartao(2);
-        Cartao c4 = new Cartao(3);
+        Cartao c1 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 1);
+        Cartao c2 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 2);
+        Cartao c3 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 3);
+        Cartao c4 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 4);
         // view
         this.construirCartao(c1, "A fazer", corCartao1, 50, 50);
         this.construirCartao(c2, "A fazer Hoje", corCartao2, 320, 50);
@@ -82,11 +90,11 @@ public class ProjetoView extends JPanel{
     }
 
     public String getNomeProjeto() {
-        return nomeProjeto;
+        return this.projetoModel.getNomeProjeto();
     }
 
     public void setNomeProjeto(String nomeProjeto) {
-        this.nomeProjeto = nomeProjeto;
+        this.projetoModel.setNomeProjeto(nomeProjeto);
     }
 //    public static void main(String[] args) {
 //        var pj = new ProjetoView("teste");

@@ -1,6 +1,5 @@
 package view;
 
-
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -8,6 +7,7 @@ import model.Cartao;
 import model.Tarefa;
 import util.ArquivosProjeto;
 import java.util.List;
+import util.GerenteEntidade;
 import view.componente.Botao;
 import view.tratadoreventos.TratadorDeEvento;
 
@@ -84,6 +84,9 @@ public class CartaoView extends JPanel{
         painelListaTarefa.setLayout(new BoxLayout(painelListaTarefa, BoxLayout.Y_AXIS));
         // loop para simular inserção de elementos
         scroll = new JScrollPane(painelListaTarefa);
+        // recuperar dados do banco de dados
+        Cartao cartaoBD = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, this.cartaoModel.getId());
+        this.cartaoModel = cartaoBD;
         for(int i=0; i < this.cartaoModel.getListaTarefas().size(); i++){
             String nomeTarefa = this.cartaoModel.getTarefa(i).getTitulo();
             painelListaTarefa.add(
@@ -110,4 +113,8 @@ public class CartaoView extends JPanel{
         }
     }
 
+    public Cartao getCartaoModel() {
+        return cartaoModel;
+    }
+    
 }

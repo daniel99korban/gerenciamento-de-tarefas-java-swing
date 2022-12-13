@@ -4,6 +4,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import util.GerenteEntidade;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Cartao {
     
     @ManyToOne
     @JoinColumn(name = "projeto_id", nullable = false)
-    private  Projeto projeto;
+    private Projeto projeto;
 
 //    public Cartao(int id) {
 //        this.id = id;
@@ -42,7 +43,13 @@ public class Cartao {
     }
     
     public void addTarefa(Tarefa tarefa){
-        this.getListaTarefas().add(tarefa);
+        var manager = GerenteEntidade.getGerenteDeEntidade();
+        Cartao cartao = manager.find(Cartao.class, this.id);
+        System.out.println("NOME CARTAO : " + cartao.getId());
+        manager.getTransaction().begin();
+        cartao.getListaTarefas().add(tarefa);
+//        this.getListaTarefas().add(tarefa);
+        manager.getTransaction().commit();
     }
     
     public Tarefa getTarefa(int index){

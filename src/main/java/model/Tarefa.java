@@ -19,7 +19,8 @@ public class Tarefa{
     private String nomeListSubTarefas;
     //@Transient private List<CheckBox> checkList;// por enquanto será ignorado pelo hibernate
     private String descricao;
-    @ManyToOne
+    @ManyToOne()
+//    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "cartao_id", nullable = false)
     private Cartao cartao;// será mapeado pelo jpa
 //    public Tarefa(String titulo, int id) {// original

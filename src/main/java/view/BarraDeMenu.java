@@ -14,14 +14,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import util.ArquivosProjeto;
+import view.tratadoreventos.TratadorDeEvento;
 
 /**
  *
  * @author danie
  */
 public class BarraDeMenu extends JToolBar{
+    private DashBoardView dashBoardView;
 
     public BarraDeMenu(Component c){
+        this.dashBoardView = (DashBoardView) c;
         this.setSize(c.getWidth(), 40);
         this.setLayout(new GridLayout(1, 3, 80, 0));
         // Determinar se a barra de ferramentas pode se mover pelo container:
@@ -34,7 +37,7 @@ public class BarraDeMenu extends JToolBar{
         var labelPencilIcon = new JLabel("undefined", pencilIcon,JLabel.CENTER); 
         labelPencilIcon.setForeground(Color.WHITE);
         // icon de login de usuario
-        var nomeUsuario = new Label("Conectado");
+        var nomeUsuario = new Label(TratadorDeEvento.usuarioLogado.getEmail());
         nomeUsuario.setForeground(Color.WHITE);
 //        Icon circulo = new ImageIcon(ArquivosProjeto.getCaminhoDoArquivo("Ellipse.png"));
 //        var labelCirculo = new JLabel("", circulo,JLabel.CENTER); 
@@ -73,6 +76,7 @@ public class BarraDeMenu extends JToolBar{
         
         JMenuItem item1M1 = new JMenuItem("Projetos recentes");
         JMenuItem item2M1 = new JMenuItem("Criar Novo Projeto");
+        item2M1.addActionListener(new TratadorDeEvento(dashBoardView));
         JMenuItem item1M2 = new JMenuItem("Config editor");
         JMenuItem item1M3 = new JMenuItem("Principais Comandos");
 	

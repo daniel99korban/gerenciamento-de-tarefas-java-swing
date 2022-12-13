@@ -12,10 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
+import model.Projeto;
 import view.tratadoreventos.TratadorDeEvento;
 
 // PROXIMA MISSÃO É PROGRAMAR PARA QUE OS PROJETOS SO APARECAM QUANDO EU CLICAR NELES
@@ -31,7 +30,7 @@ public class DashBoardView extends JFrame{
     private DefaultMutableTreeNode raiz = null;
     private JSplitPane split;
     // teste
-    GuiasDeProjetos guiasProjeto = new GuiasDeProjetos();
+    public GuiasDeProjetos guiasProjeto = new GuiasDeProjetos();
     
     public DashBoardView(String titulo){
         super(titulo);
@@ -52,12 +51,19 @@ public class DashBoardView extends JFrame{
         background.setLayout(null);
         background.setSize(1140, 640);
         background.setBackground(new Color(36, 37, 36));
-        // Arquvos para compor a guia de projetos(apenas um teste) os dados serão recuperados de um BD
-        String[] nomesArquivos = {"Projeto de LPIII", "Estudos de Java", "Prototipação de interfaces"};
-        for(int i=0; i<=2; i++){
-            guiasProjeto.addProjeto(nomesArquivos[i]);
-        }
-        // Barra de tarefas
+////        // Arquvos para compor a guia de projetos(apenas um teste) os dados serão recuperados de um BD
+////        String[] nomesArquivos = {"Projeto de LPIII", "Estudos de Java", "Prototipação de interfaces"};
+////        for(int i=0; i<=2; i++){
+////            guiasProjeto.addProjeto(nomesArquivos[i]);
+////        }
+         this.exibirGuiasDeprojeto();
+////        for(Projeto projeto : usuario.getProjetos()){
+////            for(String nomeProjeto : projeto.getNomeProjeto()){
+////                this.guiasProjeto.addProjeto(nomeProjeto);
+////            }
+////        }
+//
+//        // Barra de tarefas
         BarraDeMenu barraTarefa = new BarraDeMenu(this);
         // guias de projetos
         guiasProjeto.setBounds(0, 36, 1140, 580);
@@ -80,6 +86,18 @@ public class DashBoardView extends JFrame{
         split.setRightComponent(scrollBackground);
         this.add(split, BorderLayout.CENTER);
         this.setVisible(true);
+    }
+    
+    public void exibirGuiasDeprojeto(){// esta função teria q ser chamada a cada inserção de um novo projeto?
+        if(TratadorDeEvento.usuarioLogado.getProjetos().size() == 0){
+            System.out.println("Nenhum projeto criado!");
+//            this.guiasProjeto.addProjeto("nenhum projeto");// if senhum projeto
+        }else{
+            for(Projeto projeto : TratadorDeEvento.usuarioLogado.getProjetos()){
+                String nomeProjeto = projeto.getNomeProjeto();
+                this.guiasProjeto.addProjeto(nomeProjeto);
+            }
+        }
     }
     
     private JTree montarArvore() {
@@ -107,7 +125,7 @@ public class DashBoardView extends JFrame{
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {// so para testes
         new DashBoardView("Software de Gerenciamento de Projetos");
     }
     

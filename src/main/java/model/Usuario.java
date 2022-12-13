@@ -4,7 +4,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-import javax.transaction.Transaction;
 import util.GerenteEntidade;
 
 /**
@@ -32,7 +31,7 @@ public class Usuario {
 
     public Usuario() {}
     
-    public static Usuario verificarUsuario(String senha, String email){
+    public static Usuario verificarUsuario(String email, String senha){
         EntityManager gerente = GerenteEntidade.getGerenteDeEntidade();
         int i=1;
         Usuario usuario;
@@ -69,6 +68,20 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Projeto> getProjetos() {
+        return projetos;
+    }
+    
+    public void addProjeto(Projeto projeto){
+        // transação deve ocorrer?
+//        var gerenciador = GerenteEntidade.getGerenteDeEntidade();
+//        gerenciador.getTransaction().begin();
+//        gerenciador.persist(projeto);
+//        gerenciador.getTransaction().commit();
+//        gerenciador.close();
+        this.getProjetos().add(projeto);
     }
     
 }
