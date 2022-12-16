@@ -25,6 +25,7 @@ import view.componente.*;
 public class TratadorDeEvento implements ActionListener, MouseListener, TreeSelectionListener{
     
     private LoginView loginView;
+    private CadastroView cadastroView;
     private CartaoView cartaoView;
     private List<CartaoView> cartoesView;
     private Tarefa tarefaModel;
@@ -33,6 +34,8 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
      // email e senha
     TextField email;
     password senha;
+    Label labelEntrar;// label da tela de cadastro
+    Label labelCadastrar;// label da tela de login
     // gerenciador de entidade
     EntityManager manager = GerenteEntidade.getGerenteDeEntidade();
     // instancia para o usuario no sistema
@@ -61,23 +64,38 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         this.senha = senha;
         this.loginView = loginView;
     }
+    
+    public TratadorDeEvento(TextField email, password senha, CadastroView cadastroView) {
+        this.email = email;
+        this.senha = senha;
+        this.cadastroView = cadastroView;
+    }
  
     public TratadorDeEvento() {}
+    
+    public TratadorDeEvento(Label labelEntrar, CadastroView cadastroView) {
+        this.labelEntrar = labelEntrar;
+        this.cadastroView = cadastroView;
+    }
+    
+    public TratadorDeEvento(Label labelCadastrar, LoginView loginView) {
+        this.labelCadastrar = labelCadastrar;
+        this.loginView = loginView;
+    }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         // logar usuario
         if(e.getActionCommand().equals("Entrar")){
-            usuarioLogado = Usuario.verificarUsuario(email.getText().toString(), senha.getText().toString());
-            if(usuarioLogado!=null){
-                this.loginView.setVisible(false);
-                // chamar o projeto com todos os dados do usuario
-                DashBoardView dashBoard = new DashBoardView("Software de Gerenciamento de Projetos");
-            }else{
-                JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos!");
-                        //showConfirmDialog(null, "Usuario ou senha Incorretos!", "não autenticado", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-                System.out.println("usuario não registrado! :(");
-            }
+            logarUsuario(e);
+        }
+        // cadastrar usuario
+        if(e.getActionCommand().equals("Cadastrar")){
+            CadastroUsuario cadUse = new CadastroUsuario();
+            cadUse.cadastrarUsuario(email.getText(), senha.getText());
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            this.cadastroView.setVisible(false);
+            new LoginView("LOGIN");
         }
         // criar novo projeto
         if(e.getActionCommand().equals("Criar Novo Projeto")){
@@ -85,11 +103,11 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
             
 //            dashBoardView.guiasProjeto.addProjeto(nomeProjeto);
 //            dashBoardView.guiasProjeto.init();
-            
-//            this.usuarioLogado.addProjeto(nomeProjeto);
-            
+//            
+//            //this.usuarioLogado.addProjeto(nomeProjeto);
+//            
 //            this.dashBoardView.guiasProjeto.addProjeto(nomeProjeto);
-           // DashBoardView.instanciaDashBoard.repaint();
+//            DashBoardView.instanciaDashBoard.repaint();
         }
         // Adicionar uma nova tarefa
         if(e.getActionCommand().equals("Adicionar Tarefa")){
@@ -274,12 +292,24 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("mouse Clicked");
+        // System.out.println("mouse Clicked");
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("mouse Pressed");
+        Object origem = e.getSource();
+        if(origem instanceof Label){
+            Label lb = (Label) origem;
+            if(lb.getText().equals("<html><u>Entrar</u>")){
+                this.cadastroView.setVisible(false);
+                new LoginView("LOGIN");
+            }
+            if(lb.getText().equals("<html><u>Cadastre-se</u>")){
+                this.loginView.setVisible(false);
+                new CadastroView();
+            }
+        }
+        // System.out.println("mouse Pressed");
     }
 
     @Override
@@ -297,6 +327,15 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
             }
             ((JRadioButton) origem).setForeground(Color.GRAY);
         }
+        if(origem instanceof Label){
+            Label lb = (Label) origem;
+            if(lb.getText().equals("Entrar")){
+                this.labelEntrar.setText("<html><u>"+ labelEntrar.getText() +"</u>");
+            }
+            if(lb.getText().equals("Cadastre-se")){
+                this.labelCadastrar.setText("<html><u>"+ labelCadastrar.getText() +"</u>");
+            }
+        }
     }
 
     @Override
@@ -309,6 +348,15 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
             }
             ((JRadioButton) origem).setForeground(Color.BLACK);
         }
+        if(origem instanceof Label){
+            Label lb = (Label) origem;
+            if(lb.getText().equalsIgnoreCase("<html><u>Entrar</u>")){
+                this.labelEntrar.setText("Entrar");
+            }
+            if(lb.getText().equalsIgnoreCase("<html><u>Cadastre-se</u>")){
+                this.labelCadastrar.setText("Cadastre-se");
+            }
+        }
     }
 
     @Override
@@ -320,6 +368,19 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         }
         else{
             System.out.println("você selecionou " + node);
+        }
+    }
+
+    private void logarUsuario(ActionEvent e) {
+        usuarioLogado = Usuario.verificarUsuario(email.getText().toString(), senha.getText().toString());
+        if(usuarioLogado!=null){
+            this.loginView.setVisible(false);
+            // chamar o projeto com todos os dados do usuario
+            DashBoardView dashBoard = new DashBoardView("Software de Gerenciamento de Projetos");
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos!");
+                    //showConfirmDialog(null, "Usuario ou senha Incorretos!", "não autenticado", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+            System.out.println("usuario não registrado! :(");
         }
     }
     

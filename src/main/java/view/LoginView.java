@@ -37,7 +37,12 @@ public class LoginView extends JFrame {
         formLogin.setLayout(null);
         formLogin.add(new Label("Bem-vindo!", Color.WHITE, fonteTitulo)).setBounds(70, 40, 300, 50);
         formLogin.add(new Label("Você ainda não tem conta?", Color.WHITE, fontem)).setBounds(70, 90, 300,30);
-        formLogin.add(new Label("Cadastre-se", Color.WHITE, fontem)).setBounds(225, 90, 100,30);
+        
+        var labelEntrar = new Label("Cadastre-se", Color.WHITE, fontem);
+        labelEntrar.setBounds(225, 90, 100,30);
+        labelEntrar.addMouseListener(new TratadorDeEvento(labelEntrar, this));
+        
+        formLogin.add(labelEntrar);
        // label.setFont(new Font("Times new Roman", Font.BOLD, 20));
         formLogin.add(new Label("E-mail", Color.WHITE, fonte)).setBounds(70, 120, 110, 40);
         email = new TextField ("", Color.GRAY);
