@@ -28,18 +28,23 @@ public class CadastroUsuario {
         if(senha.isEmpty() || senha==null){
             return 2;
         }
-        // verificar se o usuario ja existem no sistema
-        Usuario u = Usuario.verificarUsuario(email, senha);
-        if(u != null){
-            JOptionPane.showMessageDialog(null, "Usuario já cadastrado no sistema!");  
-            return -1;
-        }else{
-            usuario = new Usuario(email, senha);
-            // cadastrar usuario no banco
-            manager.getTransaction().begin();
-            manager.persist(usuario);
-            manager.getTransaction().commit();      
+        // verificar se email ja esta cadastrado;
+        int i = 1;
+        while(true){
+            Usuario useResult = manager.find(Usuario.class, i);
+            if(useResult==null) break;
+            if(useResult.getEmail().equals(email)){
+                return  -1;
+            }
+            i++;
         }
+        
+        usuario = new Usuario(email, senha);
+        // cadastrar usuario no banco
+        manager.getTransaction().begin();
+        manager.persist(usuario);
+        manager.getTransaction().commit();      
+        
         return 0;
     }
         

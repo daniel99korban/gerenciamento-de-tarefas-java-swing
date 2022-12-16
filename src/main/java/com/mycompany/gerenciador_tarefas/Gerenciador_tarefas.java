@@ -1,5 +1,7 @@
 
-package gerenciador_tarefas;
+package com.mycompany.gerenciador_tarefas;
+
+import view.LoginView;
 
 /**
  *
@@ -8,6 +10,7 @@ package gerenciador_tarefas;
 public class Gerenciador_tarefas {
 
     public static void main(String[] args) {
-        // codigo
+        // iniciando a aplicação
+        new LoginView("LOGIN");
     }
 }

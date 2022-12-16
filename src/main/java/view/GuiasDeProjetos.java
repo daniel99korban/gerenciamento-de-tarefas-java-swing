@@ -37,7 +37,6 @@ public class GuiasDeProjetos extends JTabbedPane{
     }
     
     public void init(){
-        System.out.println("chamou init dentro de guas projetos");
 //        this.simulacao();
         for(ProjetoView pj : this.projetosView){
             pj.init();

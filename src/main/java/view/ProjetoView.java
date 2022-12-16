@@ -75,10 +75,11 @@ public class ProjetoView extends JPanel{
         int[] corCartao3 = {34, 127, 35};// verde
         int[] corCartao4 = {182, 68, 246};// margenta
         // model
-        Cartao c1 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 1);
-        Cartao c2 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 2);
-        Cartao c3 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 3);
-        Cartao c4 = GerenteEntidade.getGerenteDeEntidade().find(Cartao.class, 4);
+        Projeto pj = TratadorDeEvento.usuarioLogado.getProjetos().get(0);// incrementar para cada projeto do usuario
+        Cartao c1 = pj.getCartoes().get(0);
+        Cartao c2 = pj.getCartoes().get(1);
+        Cartao c3 = pj.getCartoes().get(2);
+        Cartao c4 = pj.getCartoes().get(3);
         // view
         this.construirCartao(c1, "A fazer", corCartao1, 50, 50);
         this.construirCartao(c2, "A fazer Hoje", corCartao2, 320, 50);
