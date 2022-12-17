@@ -21,7 +21,7 @@ public class ProjetoView extends JPanel{
     // variavel global que será util nas operações de movimentação dos cartões(acho que não é uma boa ideia)
     public static ProjetoView instanciaPainelProjeto;
     private Projeto projetoModel;// teste
-    private String nomeProjeto;
+    // private String nomeProjeto;
     private List<CartaoView> cartoesView;
 
     public List<CartaoView> getCartoes() {
@@ -38,7 +38,8 @@ public class ProjetoView extends JPanel{
         this.projetoModel = p;
         
         this.instanciaPainelProjeto = this;
-        this.nomeProjeto = nomeProjeto;
+        // this.nomeProjeto = nomeProjeto;
+        this.projetoModel.setNomeProjeto(nomeProjeto);
         this.cartoesView = new ArrayList<>();
         this.setSize(1090, 580);
         this.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(40, 40, 40, 40),  new EtchedBorder()));
@@ -68,14 +69,14 @@ public class ProjetoView extends JPanel{
         }
     }
     
-    public void init() {
+    public void init(int index) {
         // simular estruturas
         int[] corCartao1 = {87, 138, 242};// azul
         int[] corCartao2 = {58, 189, 218};// azul-claro
         int[] corCartao3 = {34, 127, 35};// verde
         int[] corCartao4 = {182, 68, 246};// margenta
         // model
-        Projeto pj = TratadorDeEvento.usuarioLogado.getProjetos().get(0);// incrementar para cada projeto do usuario
+        Projeto pj = TratadorDeEvento.usuarioLogado.getProjetos().get(index);// incrementar para cada projeto do usuario
         Cartao c1 = pj.getCartoes().get(0);
         Cartao c2 = pj.getCartoes().get(1);
         Cartao c3 = pj.getCartoes().get(2);

@@ -91,45 +91,11 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         }
         // cadastrar usuario
         if(e.getActionCommand().equals("Cadastrar")){
-            CadastroUsuario cadUse = new CadastroUsuario();
-            int res = cadUse.cadastrarUsuario(email.getText(), senha.getText());
-            if(res == 0){
-                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-                this.cadastroView.setVisible(false);
-                new LoginView("LOGIN");
-            }else if(res == 1 || res == 2){
-                JOptionPane.showMessageDialog(null, "Insira os dados corretamente!");
-            }else{
-                JOptionPane.showMessageDialog(null, "Usuario já cadastrado no sistema!");  
-            }
+            cadastrarUsuario();
         }
         // criar novo projeto
         if(e.getActionCommand().equals("Criar Novo Projeto")){
-            String nomeProjeto = this.obterInput();
-            // projeto 
-            var projeto = new Projeto(nomeProjeto, null);
-            // cartões
-            var c1 = new Cartao();
-            var c2 = new Cartao();
-            var c3 = new Cartao();
-            var c4 = new Cartao();
-            // relacionar entidades
-            c1.setProjeto(projeto);
-            c2.setProjeto(projeto);
-            c3.setProjeto(projeto);
-            c4.setProjeto(projeto);
-            projeto.setCartoes(List.of(c1, c2, c3, c4));
-            // relacionar entidade usuario a projeto
-            projeto.setUsuario(usuarioLogado);
-            manager.getTransaction().begin();
-            manager.persist(projeto);
-            manager.getTransaction().commit();
-//            dashBoardView.guiasProjeto.init();
-//            
-//            //this.usuarioLogado.addProjeto(nomeProjeto);
-//            
-//            this.dashBoardView.guiasProjeto.addProjeto(nomeProjeto);
-//            DashBoardView.instanciaDashBoard.repaint();
+            criarProjeto();
         }
         // Adicionar uma nova tarefa
         if(e.getActionCommand().equals("Adicionar Tarefa")){
@@ -142,6 +108,49 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
             moverCartao(e);
         }
         abrirTarefa(e);
+    }
+    
+    private void cadastrarUsuario(){
+        CadastroUsuario cadUse = new CadastroUsuario();
+        int res = cadUse.cadastrarUsuario(email.getText(), senha.getText());
+        if(res == 0){
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            this.cadastroView.setVisible(false);
+            new LoginView("LOGIN");
+        }else if(res == 1 || res == 2){
+            JOptionPane.showMessageDialog(null, "Insira os dados corretamente!");
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario já cadastrado no sistema!");  
+        }
+    }
+    
+    private void criarProjeto(){
+        String nomeProjeto = this.obterInput();
+        // projeto 
+        var projeto = new Projeto(nomeProjeto, null);
+        // cartões
+        var c1 = new Cartao();
+        var c2 = new Cartao();
+        var c3 = new Cartao();
+        var c4 = new Cartao();
+        // relacionar entidades
+        c1.setProjeto(projeto);
+        c2.setProjeto(projeto);
+        c3.setProjeto(projeto);
+        c4.setProjeto(projeto);
+        projeto.setCartoes(List.of(c1, c2, c3, c4));
+        // relacionar entidade usuario a projeto
+        projeto.setUsuario(usuarioLogado);
+        manager.getTransaction().begin();
+        manager.persist(projeto);
+        manager.getTransaction().commit();
+        // atualizar bord em tempo real
+        dashBoardView.guiasProjeto.init();
+//            
+//            //this.usuarioLogado.addProjeto(nomeProjeto);
+//            
+//            this.dashBoardView.guiasProjeto.addProjeto(nomeProjeto);
+//            DashBoardView.instanciaDashBoard.repaint();
     }
     
     private void adicionarTarefa(ActionEvent e) {
@@ -310,8 +319,6 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         }
     }
     
-    
-    
     @Override
     public void mouseClicked(MouseEvent e) {
         // System.out.println("mouse Clicked");
@@ -402,7 +409,7 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         }else{
             JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos!");
                     //showConfirmDialog(null, "Usuario ou senha Incorretos!", "não autenticado", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-            System.out.println("usuario não registrado! :(");
+            //System.out.println("usuario não registrado! :(");
         }
     }
     

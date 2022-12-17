@@ -56,12 +56,7 @@ public class DashBoardView extends JFrame{
 ////        for(int i=0; i<=2; i++){
 ////            guiasProjeto.addProjeto(nomesArquivos[i]);
 ////        }
-         this.exibirGuiasDeprojeto();
-////        for(Projeto projeto : usuario.getProjetos()){
-////            for(String nomeProjeto : projeto.getNomeProjeto()){
-////                this.guiasProjeto.addProjeto(nomeProjeto);
-////            }
-////        }
+        this.exibirGuiasDeprojeto();
 //
 //        // Barra de tarefas
         BarraDeMenu barraTarefa = new BarraDeMenu(this);

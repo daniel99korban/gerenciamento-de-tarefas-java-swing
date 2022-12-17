@@ -38,8 +38,10 @@ public class GuiasDeProjetos extends JTabbedPane{
     
     public void init(){
 //        this.simulacao();
+        int i = 0;
         for(ProjetoView pj : this.projetosView){
-            pj.init();
+            pj.init(i);
+            i++;
             pj.exibirCartoes();
             this.addTab(pj.getNomeProjeto() ,pj);
         }
