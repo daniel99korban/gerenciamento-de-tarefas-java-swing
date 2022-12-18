@@ -45,7 +45,6 @@ public class Cartao {
     public void addTarefa(Tarefa tarefa){
         var manager = GerenteEntidade.getGerenteDeEntidade();
         Cartao cartao = manager.find(Cartao.class, this.id);
-        System.out.println("NOME CARTAO : " + cartao.getId());
         manager.getTransaction().begin();
         cartao.getListaTarefas().add(tarefa);
 //        this.getListaTarefas().add(tarefa);

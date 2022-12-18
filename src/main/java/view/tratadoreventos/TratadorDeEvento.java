@@ -71,7 +71,7 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         this.cadastroView = cadastroView;
     }
  
-    public TratadorDeEvento() {}
+    public TratadorDeEvento(){}
     
     public TratadorDeEvento(Label labelEntrar, CadastroView cadastroView) {
         this.labelEntrar = labelEntrar;
@@ -145,12 +145,14 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         manager.persist(projeto);
         manager.getTransaction().commit();
         // atualizar bord em tempo real
-        dashBoardView.guiasProjeto.init();
 //            
 //            //this.usuarioLogado.addProjeto(nomeProjeto);
 //            
-//            this.dashBoardView.guiasProjeto.addProjeto(nomeProjeto);
-//            DashBoardView.instanciaDashBoard.repaint();
+        this.dashBoardView.guiasProjeto.addProjeto(nomeProjeto);
+        dashBoardView.guiasProjeto.init();
+        // minha tentativa de diminuir o erro
+        // DashBoardView.instanciaDashBoard.remove(guiasProjeto);
+            //DashBoardView.instanciaDashBoard.repaint();
     }
     
     private void adicionarTarefa(ActionEvent e) {
@@ -162,14 +164,7 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         // válidar entrada de usuáiro(se o usuário cancelar ou deixar o input vazio, nada acontece)
         if(res != null && !res.isEmpty()){
             // cria-se e se adiciona uma nova tarefa
-            Tarefa t;
-            // verificar se o cartão esta vazio
-            if(cartaoView.cartaoModel.getListaTarefas().isEmpty()){
-                t = new Tarefa(res);
-            }else{
-                // int ultimaTarefa = cartaoView.cartaoModel.getListaTarefas().size()-1;
-                t = new Tarefa(res);
-            }
+            Tarefa t = new Tarefa(res);
             t.setSubTitulo("na lista " + cartaoView.tituloCartao.getText());
             // fundamental para que o join funcione
             t.setCartao(cartaoView.cartaoModel);
@@ -319,6 +314,19 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         }
     }
     
+    private void logarUsuario(ActionEvent e) {
+        usuarioLogado = Usuario.verificarUsuario(email.getText().toString(), senha.getText().toString());
+        if(usuarioLogado!=null){
+            this.loginView.setVisible(false);
+            // chamar o projeto com todos os dados do usuario
+            DashBoardView dashBoard = new DashBoardView("Software de Gerenciamento de Projetos");
+        }else{
+            JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos!");
+                    //showConfirmDialog(null, "Usuario ou senha Incorretos!", "não autenticado", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+            //System.out.println("usuario não registrado! :(");
+        }
+    }
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         // System.out.println("mouse Clicked");
@@ -397,19 +405,6 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         }
         else{
             System.out.println("você selecionou " + node);
-        }
-    }
-
-    private void logarUsuario(ActionEvent e) {
-        usuarioLogado = Usuario.verificarUsuario(email.getText().toString(), senha.getText().toString());
-        if(usuarioLogado!=null){
-            this.loginView.setVisible(false);
-            // chamar o projeto com todos os dados do usuario
-            DashBoardView dashBoard = new DashBoardView("Software de Gerenciamento de Projetos");
-        }else{
-            JOptionPane.showMessageDialog(null, "Usuario ou senha Incorretos!");
-                    //showConfirmDialog(null, "Usuario ou senha Incorretos!", "não autenticado", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-            //System.out.println("usuario não registrado! :(");
         }
     }
     

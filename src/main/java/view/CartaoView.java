@@ -106,10 +106,7 @@ public class CartaoView extends JPanel{
         if(cartaoView.cartaoModel.getListaTarefas().size() >= 10){
             cartaoView.setSize(cartaoView.getWidth(), 450);
         }else{
-            // se cartao não estiver vazio!
-            if(!cartaoView.cartaoModel.getListaTarefas().isEmpty()){
-                cartaoView.setSize(cartaoView.getWidth(), cartaoView.getHeight() + gap);
-            }
+            cartaoView.setSize(cartaoView.getWidth(), cartaoView.getHeight() + gap);
         }
     }
 
