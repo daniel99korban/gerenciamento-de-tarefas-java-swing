@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,12 +23,13 @@ import view.tratadoreventos.TratadorDeEvento;
 public class DashBoardView extends JFrame{
     // variavel global que será util nas operações com a view(desativar/ativar view em certos momentos)
     public static DashBoardView instanciaDashBoard;
-    private List<GuiasDeProjetos> guiaProjeto;// vai ter minhas listas de projetos
     // arvores com lista de projetos do usuario
     private JTree arvoreProjetos = null;
     private DefaultMutableTreeNode raiz = null;
-    private JSplitPane split;
-    // teste
+    public JSplitPane split;
+    public JPanel background;
+    public JScrollPane scrollBackground;
+    // guias de projetos
     public GuiasDeProjetos guiasProjeto = new GuiasDeProjetos();
     
     public DashBoardView(String titulo){
@@ -47,7 +47,7 @@ public class DashBoardView extends JFrame{
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
         // painel para agrupar abas de projetos
-        var background = new JPanel();
+        background = new JPanel();
         background.setLayout(null);
         background.setSize(1140, 640);
         background.setBackground(new Color(36, 37, 36));
@@ -56,7 +56,7 @@ public class DashBoardView extends JFrame{
 ////        for(int i=0; i<=2; i++){
 ////            guiasProjeto.addProjeto(nomesArquivos[i]);
 ////        }
-        this.exibirGuiasDeprojeto();
+        this.carregarProjetosNaGuiaProjetos();
 //
 //        // Barra de tarefas
         BarraDeMenu barraTarefa = new BarraDeMenu(this);
@@ -76,19 +76,24 @@ public class DashBoardView extends JFrame{
         scrollProjetos.setMinimumSize(new Dimension(150, 0));
         split.setLeftComponent(scrollProjetos);
         // lado direito do spllit
-        var scrollBackground = new JScrollPane();
+        scrollBackground = new JScrollPane();
         scrollBackground.setViewportView(background);
         split.setRightComponent(scrollBackground);
         this.add(split, BorderLayout.CENTER);
         this.setVisible(true);
     }
     
-    public void exibirGuiasDeprojeto(){// esta função teria q ser chamada a cada inserção de um novo projeto?
+    public void carregarProjetosNaGuiaProjetos(){// esta função teria q ser chamada a cada inserção de um novo projeto?
         if(TratadorDeEvento.usuarioLogado.getProjetos().size() == 0){
-            System.out.println("Nenhum projeto criado!");
+            System.out.println("\n\nNenhum projeto criado!\n\n\n");
 //            this.guiasProjeto.addProjeto("nenhum projeto");// if senhum projeto
         }else{
+            System.out.println("\n\nCaiu no else\n\n\n");
             for(Projeto projeto : TratadorDeEvento.usuarioLogado.getProjetos()){
+                if(projeto==null){
+                    System.out.println("\n\n\nMODEL PROJETO NULLO(carregardados)\n\n\n");
+                    break;
+                }
                 String nomeProjeto = projeto.getNomeProjeto();
                 this.guiasProjeto.addProjeto(nomeProjeto);
             }

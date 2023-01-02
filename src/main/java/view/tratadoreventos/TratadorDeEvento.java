@@ -1,6 +1,7 @@
 
 package view.tratadoreventos;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -144,15 +145,9 @@ public class TratadorDeEvento implements ActionListener, MouseListener, TreeSele
         manager.getTransaction().begin();
         manager.persist(projeto);
         manager.getTransaction().commit();
-        // atualizar bord em tempo real
-//            
-//            //this.usuarioLogado.addProjeto(nomeProjeto);
-//            
-        this.dashBoardView.guiasProjeto.addProjeto(nomeProjeto);
-        dashBoardView.guiasProjeto.init();
-        // minha tentativa de diminuir o erro
-        // DashBoardView.instanciaDashBoard.remove(guiasProjeto);
-            //DashBoardView.instanciaDashBoard.repaint();
+        // atualizar bord em tempo real(ainda não consigo resolver)
+//          // atualizar bord em tempo real(ainda não consigo resolver)
+        
     }
     
     private void adicionarTarefa(ActionEvent e) {

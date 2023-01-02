@@ -4,6 +4,7 @@ package view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTabbedPane;
+import view.tratadoreventos.TratadorDeEvento;
 
 /**
  *
@@ -40,6 +41,14 @@ public class GuiasDeProjetos extends JTabbedPane{
 //        this.simulacao();
         int i = 0;
         for(ProjetoView pj : this.projetosView){
+            if(pj==null){
+                System.out.println("\n\n\nPROJETO VIEW\n\n\n");
+                break;
+            }
+            if(TratadorDeEvento.usuarioLogado.getProjetos().size() < (i+1)){
+                // o carregamento de projeto do usuario foi feito completamente
+                break;
+            }
             pj.init(i);
             i++;
             pj.exibirCartoes();
